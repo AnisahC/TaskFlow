@@ -26,12 +26,12 @@ function Navbar() {
         <li>
           <Link href="/">Home</Link>
         </li>
-        <li>
+        {/* <li>
           <Link href="/">notDefined</Link>
         </li>
         <li>
           <Link href="/">notDefined</Link>
-        </li>
+        </li> */}
         <li>
           <Link href="/about">About</Link>
         </li>
