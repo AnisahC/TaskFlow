@@ -13,6 +13,11 @@ import { motion, px } from "framer-motion";
 import { useState } from "react";
 import profileImage from "../zoe/image_zoe.png";
 import dialogImage from "../zoe/dialog_zoe.png";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Zoe",
+};
 
 const patrickHandSc = Patrick_Hand_SC({
   weight: "400",
