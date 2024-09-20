@@ -1,0 +1,19 @@
+.container {
+    max-width: 1500px;
+    margin: 0 auto;
+    margin-top: 300px;
+    padding: 50px;
+    text-align: center;
+    background-color: lightblue
+  }
+  
+  h1 {
+    font-size: 40pt;
+    font-weight: bold;
+    color: #000000;
+  }
+  
+  h2 {
+    font-size: 20pt;
+    color: #FFFFFF;
+  }
