@@ -14,7 +14,7 @@ export default function Page() {
                 <Image
                     src={profileImage}
                     alt="Profile image of a cat sitting at a computer."
-                    sizes="100vw"
+                    sizes="70vw"
                     style={{
                         width: '100%',
                         height: 'auto',
