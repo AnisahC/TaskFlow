@@ -20,6 +20,9 @@ function Navbar() {
           <Link href="/about/zoe">Zoe</Link>
         </li>
         <li>
+          <Link href="/about/jun">Jun</Link>
+        </li>
+        <li>
           <Link href="/">notDefined</Link>
         </li>
       </ul>
