@@ -22,9 +22,6 @@ function Navbar() {
         <li>
           <Link href="/about/jun">Jun</Link>
         </li>
-        <li>
-          <Link href="/">notDefined</Link>
-        </li>
       </ul>
     </nav>
   );
