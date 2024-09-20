@@ -1,17 +1,6 @@
 .container {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #3e007c;
-  }
-  
-  h2 {
-    font-size: 1.5rem;
-    color: #97770d;
-  }
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
