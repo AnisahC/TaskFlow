@@ -55,6 +55,52 @@ app.post('/api/tasks', async (req: Request, res: Response) => {
   }
 });
 
+// Endpoint to get all tasks
+app.get('/api/tasks', async (req: Request, res: Response) => {
+    try {
+      await client.connect();
+      const database = client.db('task_management');
+      const tasksCollection = database.collection('task');
+  
+      // Fetch all tasks
+      const tasks = await tasksCollection.find().toArray();
+  
+      res.status(200).json(tasks);
+    } catch (error) {
+      console.error('Error fetching tasks:', error);
+      res.status(500).json({ message: 'Error fetching tasks' });
+    } finally {
+      await client.close();
+    }
+  });
+
+  // Endpoint to search tasks
+app.get('/api/tasks/search', async (req: Request, res: Response) => {
+    const { title, category } = req.query;
+  
+    const query: any = {};
+    if (title) query.title = { $regex: new RegExp(title as string, 'i') };
+    if (category) query.category = { $regex: new RegExp(category as string, 'i') };
+  
+    try {
+      await client.connect();
+      const database = client.db('task_management');
+      const tasksCollection = database.collection('task');
+  
+      // Search for tasks matching the query
+      const tasks = await tasksCollection.find(query).toArray();
+  
+      res.status(200).json(tasks);
+    } catch (error) {
+      console.error('Error searching tasks:', error);
+      res.status(500).json({ message: 'Error searching tasks' });
+    } finally {
+      await client.close();
+    }
+  });
+  
+  
+
 // Connect to MongoDB
 async function startServer() {
   try {

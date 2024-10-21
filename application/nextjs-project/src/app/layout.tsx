@@ -38,6 +38,12 @@ function Navbar() {
         <li>
           <Link href="/AddTasks">Add Tasks</Link>
         </li>
+        <li>
+          <Link href="/testing/list">List Tasks</Link>
+        </li>
+        <li>
+          <Link href="/testing/search">Search Tasks</Link>
+        </li>
       </ul>
     </nav>
   );
