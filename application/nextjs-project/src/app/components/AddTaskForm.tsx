@@ -9,7 +9,7 @@ const AddTaskForm: React.FC = () => {
   const [priority, setPriority] = useState("High"); // Default value
   const [category, setCategory] = useState("Meeting"); // Default value
   const [description, setDescription] = useState("");
-
+  const [successMessage, setSuccessMessage] = useState(""); // State for success message
   // Handle form submission
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault(); // Prevent the default form submission
@@ -41,16 +41,23 @@ const AddTaskForm: React.FC = () => {
       console.log("Task added successfully:", data);
 
       // Clear the form after successful submission
+      setSuccessMessage("Task added successfully!");
       setTitle("");
       setStartDate("");
       setEndDate("");
       setPriority("High");
       setCategory("Meeting");
       setDescription("");
+
+      // Clear the success message after 5 seconds
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 5000);
     } catch (error) {
       console.error("Error adding task:", error);
     }
   };
+
 
   return (
     <section className="flex flex-col w-[65%] max-md:ml-0 max-md:w-full">
@@ -59,6 +66,15 @@ const AddTaskForm: React.FC = () => {
           Add Task
         </h1>
         <div className="flex shrink-0 mt-20 h-px bg-gray-100 max-md:mt-10 max-md:max-w-full" />
+        
+        {/* Display success message if it exists */}
+        {successMessage && (
+          <div
+            className="mt-4 text-green-500 font-bold">
+            {successMessage}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="flex flex-col pr-20 pl-8 mt-12 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full">
           <div className="flex flex-wrap gap-3.5 text-base leading-loose text-center text-stone-400 max-md:mr-1.5 max-md:max-w-full">
             <img
