@@ -15,7 +15,7 @@ const RecentTask: React.FC<RecentTaskProps> = ({ name, daysAgo }) => (
 );
 
 const RecentlyFinishedCard: React.FC = () => {
-  const recentTasks = [{ name: "naflfnasjlkcnjahfdlakdjalkdmal", daysAgo: 8 }];
+  const recentTasks = [{ name: "take mom to airport", daysAgo: 8 }];
 
   return (
     <div className="flex flex-col py-6 mt-8 w-full leading-tight bg-white rounded-2xl border border-solid border-stone-900 border-opacity-10 max-w-[408px]">
