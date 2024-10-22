@@ -1,6 +1,7 @@
 import Image from "next/image";
-import houseImage from "./house.png"
+import houseImage from "./house.png";
 import type { Metadata } from "next";
+import TaskManagement from "./components/TaskManagement";
 
 export const metadata: Metadata = {
   title: "Home",
@@ -15,8 +16,8 @@ export default function Home() {
           alt="A picture of a house"
           sizes="70vw"
           style={{
-              width: '100%',
-              height: 'auto',
+            width: "100%",
+            height: "auto",
           }}
         />
       </div>
