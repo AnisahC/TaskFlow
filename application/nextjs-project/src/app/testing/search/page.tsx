@@ -8,7 +8,7 @@ const TaskSearch = () => {
 
   const handleSearch = () => {
     let query = `?title=${title}&category=${category}`;
-    fetch(`http://localhost:4000/api/tasks/search${query}`)
+    fetch(`/api/tasks/search${query}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Check the data from the API

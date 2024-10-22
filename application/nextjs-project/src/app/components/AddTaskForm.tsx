@@ -25,7 +25,7 @@ const AddTaskForm: React.FC = () => {
 
     try {
       console.log("Adding task:", newTask);
-      const response = await fetch("http://localhost:4000/api/tasks", {
+      const response = await fetch("/api/tasks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
