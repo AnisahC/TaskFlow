@@ -1,7 +1,6 @@
 import Image from "next/image";
 import houseImage from "./house.png";
 import type { Metadata } from "next";
-import TaskManagement from "./components/TaskManagement";
 
 export const metadata: Metadata = {
   title: "Home",

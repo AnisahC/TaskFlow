@@ -36,7 +36,7 @@ function Navbar() {
           <Link href="/about">About</Link>
         </li>
         <li>
-          <Link href="/AddTasks">Add Tasks</Link>
+          <Link href="/pages/MyCenter">My Center</Link>
         </li>
         <li>
           <Link href="/testing/list">List Tasks</Link>

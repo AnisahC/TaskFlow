@@ -58,24 +58,23 @@ const AddTaskForm: React.FC = () => {
     }
   };
 
-
   return (
     <section className="flex flex-col w-[65%] max-md:ml-0 max-md:w-full">
       <div className="flex flex-col grow max-md:max-w-full">
         <h1 className="self-start text-4xl font-bold leading-tight text-stone-900">
           Add Task
         </h1>
-        <div className="flex shrink-0 mt-20 h-px bg-gray-100 max-md:mt-10 max-md:max-w-full" />
-        
+        <div className="flex shrink-0 mt-10 h-px bg-gray-100 max-md:mt-10 max-md:max-w-full" />
+
         {/* Display success message if it exists */}
         {successMessage && (
-          <div
-            className="mt-4 text-green-500 font-bold">
-            {successMessage}
-          </div>
+          <div className="mt-4 text-green-500 font-bold">{successMessage}</div>
         )}
 
-        <form onSubmit={handleSubmit} className="flex flex-col pr-20 pl-8 mt-12 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full">
+        <form
+          onSubmit={handleSubmit}
+          className="flex flex-col pr-20 pl-8 mt-12 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
+        >
           <div className="flex flex-wrap gap-3.5 text-base leading-loose text-center text-stone-400 max-md:mr-1.5 max-md:max-w-full">
             <img
               loading="lazy"
@@ -90,14 +89,17 @@ const AddTaskForm: React.FC = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               aria-label="Task name"
-              required 
+              required
             />
           </div>
           <div className="mt-2.5 ml-3 max-w-full w-[597px]">
             <div className="flex gap-5 max-md:flex-col">
               <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full">
                 <div className="flex flex-col grow items-start max-md:mt-10">
-                  <label htmlFor="start-date" className="text-xl leading-loose text-center text-black">
+                  <label
+                    htmlFor="start-date"
+                    className="text-xl leading-loose text-center text-black"
+                  >
                     Start
                   </label>
                   <input
@@ -108,7 +110,10 @@ const AddTaskForm: React.FC = () => {
                     onChange={(e) => setStartDate(e.target.value)}
                     required
                   />
-                  <label htmlFor="priority" className="mt-6 text-xl leading-loose text-center text-black">
+                  <label
+                    htmlFor="priority"
+                    className="mt-6 text-xl leading-loose text-center text-black"
+                  >
                     Priority
                   </label>
                   <select
@@ -121,14 +126,20 @@ const AddTaskForm: React.FC = () => {
                     <option value="Medium">Medium</option>
                     <option value="Low">Low</option>
                   </select>
-                  <label htmlFor="description" className="mt-5 text-xl leading-loose text-center text-black">
+                  <label
+                    htmlFor="description"
+                    className="mt-5 text-xl leading-loose text-center text-black"
+                  >
                     Descriptions
                   </label>
                 </div>
               </div>
               <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
                 <div className="flex flex-col items-start max-md:mt-10">
-                  <label htmlFor="end-date" className="text-xl leading-loose text-center text-black max-md:ml-2">
+                  <label
+                    htmlFor="end-date"
+                    className="text-xl leading-loose text-center text-black max-md:ml-2"
+                  >
                     End
                   </label>
                   <input
@@ -139,7 +150,10 @@ const AddTaskForm: React.FC = () => {
                     onChange={(e) => setEndDate(e.target.value)}
                     required
                   />
-                  <label htmlFor="category" className="mt-6 text-xl leading-10 text-center text-black">
+                  <label
+                    htmlFor="category"
+                    className="mt-6 text-xl leading-10 text-center text-black"
+                  >
                     Category
                   </label>
                   <select
@@ -187,4 +201,3 @@ const AddTaskForm: React.FC = () => {
 };
 
 export default AddTaskForm;
-
