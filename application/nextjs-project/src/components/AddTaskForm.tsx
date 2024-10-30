@@ -49,10 +49,10 @@ const AddTaskForm: React.FC = () => {
       setCategory("Meeting");
       setDescription("");
 
-      // Clear the success message after 5 seconds
+      // Clear the success message after 2 seconds
       setTimeout(() => {
         setSuccessMessage("");
-      }, 5000);
+      }, 2000);
     } catch (error) {
       console.error("Error adding task:", error);
     }
