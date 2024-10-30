@@ -63,23 +63,23 @@ const Sidebar: React.FC = () => {
         <MenuItem
           icon="https://cdn.builder.io/api/v1/image/assets/TEMP/2245afc7abcdfb022e33ee91eb9d9b353cee40d5981849070729b95b47ac801d?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
           label="Overview"
-          to="/pages/MyCenter"
-          isActive={activeItem === "/pages/MyCenter"}
-          onClick={() => handleMenuItemClick("/pages/MyCenter")}
+          to="/MyCenter"
+          isActive={activeItem === "/MyCenter"}
+          onClick={() => handleMenuItemClick("/MyCenter")}
         />
         <MenuItem
           icon="https://cdn.builder.io/api/v1/image/assets/TEMP/95c6970b609598c2e23104d55fa6004300948c1597ac8b8e0a66f2280f698042?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
           label="Add Task"
-          to="/pages/MyCenter/addTask"
-          isActive={activeItem === "/pages/MyCenter/addTask"}
-          onClick={() => handleMenuItemClick("/pages/MyCenter/addTask")}
+          to="/MyCenter/addTask"
+          isActive={activeItem === "/MyCenter/addTask"}
+          onClick={() => handleMenuItemClick("/MyCenter/addTask")}
         />
         <MenuItem
           icon="https://cdn.builder.io/api/v1/image/assets/TEMP/95c6970b609598c2e23104d55fa6004300948c1597ac8b8e0a66f2280f698042?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
           label="My Colour Theme"
-          to="/pages/my-colour-theme"
-          isActive={activeItem === "/pages/my-colour-theme"}
-          onClick={() => handleMenuItemClick("/pages/MyCenter/my-colour-theme")}
+          to="/my-colour-theme"
+          isActive={activeItem === "/my-colour-theme"}
+          onClick={() => handleMenuItemClick("/MyCenter/my-colour-theme")}
         />
       </div>
     </nav>

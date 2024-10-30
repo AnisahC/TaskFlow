@@ -1,9 +1,9 @@
 "use client";
 import React, { useState } from "react";
 
-import { TaskList } from "../../../components/TaskCard/TaskList";
-import { TaskStatus } from "../../../components/TaskCard/types";
-import { BackButton } from "../../../components/BackButton";
+import { TaskList } from "@/components/TaskCard/TaskList";
+import { TaskStatus } from "@/components/TaskCard/types";
+import { BackButton } from "@/components/BackButton";
 const tasks = {
   todo: {
     title: "TO DO",

@@ -33,7 +33,7 @@ const RecentlyFinishedCard: React.FC = () => {
           <div
             className="self-stretch my-auto hover:cursor-pointer"
             onClick={() =>
-              handleMenuItemClick("/pages/MyCenter/TaskListAndSearch")
+              handleMenuItemClick("/MyCenter/TaskListAndSearch")
             }
           >
             View more

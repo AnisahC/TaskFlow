@@ -1,5 +1,5 @@
 import React from "react";
-import WelcomeCard from "../../components/WelcomeDashboard";
+import WelcomeCard from "@/components/WelcomeDashboard";
 
 const userName = "User";
 const userId = "123456789";
