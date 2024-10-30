@@ -1,5 +1,5 @@
 import React from "react";
-import AddTaskForm from "../../../components/AddTaskForm";
+import AddTaskForm from "@/components/AddTaskForm";
 
 const AddTasksPage: React.FC = () => {
   return <AddTaskForm />;

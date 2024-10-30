@@ -19,8 +19,8 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
 
   const navigate = useNavigate();
   const handleImageClick = () => {
-    navigate("/pages/CreateAccount");
-    window.location.href = "/pages/CreateAccount";
+    navigate("/CreateAccount");
+    window.location.href = "/CreateAccount";
   };
   return (
     <header className="flex flex-wrap gap-10 items-start px-7 py-5 w-full bg-stone-500 max-md:px-5 max-md:max-w-full">
