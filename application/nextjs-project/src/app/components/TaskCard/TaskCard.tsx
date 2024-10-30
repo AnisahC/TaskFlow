@@ -10,6 +10,7 @@ interface TaskCardProps {
   date: string;
   time?: string;
   description: string;
+  onClick: () => void;
 }
 
 export function TaskCard({
@@ -19,22 +20,30 @@ export function TaskCard({
   title,
   description,
   category,
+  onClick,
 }: TaskCardProps) {
   const priorities = Array.isArray(priority) ? priority : [priority];
 
   return (
-    <article className="flex flex-col items-start p-4 mt-3 w-full bg-white rounded shadow-[0px_2px_0px_rgba(0,0,0,0.16)]">
+    <article
+      onClick={onClick}
+      className="flex flex-col items-start p-4 mt-3 w-full bg-white border-1 border-gray-400 rounded-lg shadow-lg"
+    >
       <div className="flex gap-1.5 items-start">
         {priorities.map((p, index) => (
           <PriorityTag key={index} priority={p} />
         ))}
       </div>
-      <h2 className="text-lg">{title}</h2>
-      <h3 className="text-gray-500">{category}</h3>
-      <p className="self-stretch mt-3 text-sm leading-5 text-zinc-900">
+      <h2 className="text-lg my-2">{title}</h2>
+
+      {/* <p className="self-stretch mt-3 text-sm leading-5 text-zinc-900">
         {description}
-      </p>
-      <DateDisplay date={date} time={time} />
+      </p> */}
+      <div className="flex flex-row items-end space-x-4 my-1 w-full">
+        <DateDisplay date={date} time={time} />
+        <div className="flex-grow"></div>
+        <h3 className="text-gray-500 my-auto">{category}</h3>
+      </div>
     </article>
   );
 }

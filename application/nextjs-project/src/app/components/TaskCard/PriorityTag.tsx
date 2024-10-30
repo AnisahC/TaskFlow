@@ -5,16 +5,16 @@ interface PriorityTagProps {
 }
 
 const priorityStyles = {
-  low: "text-emerald-800 bg-teal-300",
-  medium: "text-yellow-900 bg-amber-200",
-  high: "text-amber-900 bg-orange-300",
-  highest: "text-rose-950 bg-red-400",
+  Low: "text-emerald-600 bg-teal-200",
+  Medium: "text-yellow-600 bg-amber-200",
+  High: "text-amber-600 bg-orange-200",
+  HTMLAreaElementighest: "text-rose-800 bg-red-300",
 };
 
 export function PriorityTag({ priority }: PriorityTagProps) {
   return (
     <span
-      className={`gap-2.5 px-2 py-0.5 rounded-sm ${
+      className={`gap-2.5 px-2 py-0.5 rounded-lg ${
         priorityStyles[priority as keyof typeof priorityStyles]
       }`}
     >

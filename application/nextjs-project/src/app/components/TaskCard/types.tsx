@@ -1,10 +1,11 @@
 export type TaskStatus = "todo" | "inProgress" | "completed";
 
 export interface Task {
-  priority: string | string[];
+  _id: string;
   title: string;
+  startDate: string;
+  endDate: string;
+  priority: string;
   category: string;
-  date: string;
-  time?: string;
   description: string;
 }

@@ -7,7 +7,7 @@ interface DateDisplayProps {
 
 export function DateDisplay({ date, time }: DateDisplayProps) {
   const isOverdue = false; // Logic to determine if date is overdue
-  const baseClasses = "flex gap-2.5 items-center px-2 py-1.5 mt-3 rounded-sm";
+  const baseClasses = "flex gap-2.5 items-center px-2 py-1.5 rounded-sm";
   const colorClasses = isOverdue
     ? "text-red-700 bg-rose-100"
     : "bg-neutral-100 text-zinc-500";

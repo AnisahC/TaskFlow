@@ -32,9 +32,7 @@ const RecentlyFinishedCard: React.FC = () => {
         <div className="flex gap-1 items-center self-stretch my-auto text-sm text-stone-900 text-opacity-40">
           <div
             className="self-stretch my-auto hover:cursor-pointer"
-            onClick={() =>
-              handleMenuItemClick("/pages/MyCenter/TaskListAndSearch")
-            }
+            onClick={() => handleMenuItemClick("/pages/TaskListAndSearch")}
           >
             View more
           </div>

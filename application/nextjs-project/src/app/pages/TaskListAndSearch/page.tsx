@@ -1,57 +1,27 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { TaskList } from "../../../components/TaskCard/TaskList";
-import { TaskStatus } from "../../../components/TaskCard/types";
-import { BackButton } from "../../../components/BackButton";
-const tasks = {
+import { TaskList } from "../../components/TaskCard/TaskList";
+import { TaskStatus } from "../../components/TaskCard/types";
+import { BackButton } from "../../components/BackButton";
+import { Task } from "../../components/TaskCard/types";
+
+const alltask: {
+  todo: { title: string; items: Task[] };
+  inProgress: { title: string; items: Task[] };
+  completed: { title: string; items: Task[] };
+} = {
   todo: {
     title: "TO DO",
-    items: [
-      {
-        title: "Task 1",
-        category: "General",
-        priority: "low",
-        date: "Jan 29th, 2022",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer viverra venenatis accumsan.",
-      },
-    ],
+    items: [],
   },
   inProgress: {
     title: "IN PROGRESS",
-    items: [
-      {
-        title: "Task 2",
-        category: "General",
-        priority: ["low", "medium"],
-        date: "Jan 29th, 2022",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer viverra venenatis accumsan.",
-      },
-    ],
+    items: [],
   },
   completed: {
     title: "COMPLETED",
-    items: [
-      {
-        title: "Task 3",
-        category: "General",
-        priority: "low",
-        date: "Jan 29th, 2022",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer viverra venenatis accumsan.",
-      },
-      {
-        title: "Task 4",
-        category: "General",
-        priority: "medium",
-        date: "Jan 29th, 2022",
-        time: "00:00",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer viverra venenatis accumsan.",
-      },
-    ],
+    items: [],
   },
 };
 
@@ -69,6 +39,7 @@ const TaskBoard: React.FC = () => {
         // Ensure that 'data' is an array
         if (Array.isArray(data)) {
           setSearchResults(data);
+          alltask.todo.items = data;
         } else {
           setSearchResults([]); // Fallback to empty array if not
         }
@@ -76,14 +47,39 @@ const TaskBoard: React.FC = () => {
       .catch((error) => console.error("Error searching tasks:", error));
   };
 
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("../api/tasks");
+        if (!response.ok) {
+          throw new Error("Failed to fetch tasks");
+        }
+        const data = await response.json();
+        setTasks(data);
+        alltask.todo.items = data;
+      } catch (err) {
+        setError((err as Error).message);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
-    <div>
+    <div className="p-5">
       <BackButton
         text="Back"
         iconSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/32486b1ff544e50222c571c38267adedef2546f5260ee1da569301c13e1bcc36?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
       />
 
-      <div className="flex items-center space-x-4 px-12">
+      <div className="flex items-center space-x-4 px-12 mt-8">
         <input
           type="text"
           placeholder="Title"
@@ -101,7 +97,7 @@ const TaskBoard: React.FC = () => {
 
       <div className="flex flex-col">
         <main className="flex min-h-full flex-wrap gap-4 items-start px-12 pt-6 pb-12 text-xs font-semibold rounded-none max-md:px-5">
-          {Object.entries(tasks).map(([status, { title, items }]) => (
+          {Object.entries(alltask).map(([status, { title, items }]) => (
             <TaskList
               key={status}
               title={title}
