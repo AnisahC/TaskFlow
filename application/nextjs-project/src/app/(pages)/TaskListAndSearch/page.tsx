@@ -1,10 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-
-import { TaskList } from "../../components/TaskCard/TaskList";
-import { TaskStatus } from "../../components/TaskCard/types";
-import { BackButton } from "../../components/BackButton";
-import { Task } from "../../components/TaskCard/types";
+import { Task } from "@/components/TaskCard/types";
+import { TaskList } from "@/components/TaskCard/TaskList";
+import { TaskStatus } from "@/components/TaskCard/types";
+import { BackButton } from "@/components/BackButton";
 
 const alltask: {
   todo: { title: string; items: Task[] };

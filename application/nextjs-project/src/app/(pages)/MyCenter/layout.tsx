@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Sidebar from "../../components/Sidebar";
-import PointsCard from "../../components/PointsCard";
-import RecentlyFinishedCard from "../../components/RecentlyFinishedCard";
-import { NavigationBar } from "../../components/NavigationBar";
-import AddTask from "../../components/AddTaskForm";
+import Sidebar from "@/components/Sidebar";
+import PointsCard from "@/components/PointsCard";
+import RecentlyFinishedCard from "@/components/RecentlyFinishedCard";
+import { NavigationBar } from "@/components/NavigationBar";
+import AddTask from "@/components/AddTaskForm";
 
 const AddTasksLayout: React.FC<{ children: React.ReactNode }> = ({
   children,

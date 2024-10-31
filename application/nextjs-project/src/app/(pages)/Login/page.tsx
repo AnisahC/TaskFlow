@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { InputField } from "../../components/InputField";
-import { LoginFormData } from "../../components/types";
+import { InputField } from "@/components/InputField";
+import { LoginFormData } from "@/components/types";
 
 const SignInForm: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({

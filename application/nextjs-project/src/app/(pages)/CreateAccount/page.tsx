@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { InputField } from "../../components/InputField";
-import { SignupFormData } from "../../components/types";
+import { InputField } from "@/components/InputField";
+import { SignupFormData } from "@/components/types";
 import { div } from "framer-motion/client";
 
 const SignupForm: React.FC = () => {
@@ -102,7 +102,7 @@ const SignupForm: React.FC = () => {
               <p className="self-start mt-16 max-md:mt-10">
                 Already have an account?{" "}
                 <a
-                  href="/pages/Login"
+                  href="/Login"
                   className="text-stone-400 hover:text-stone-500 focus:outline-none focus:underline"
                   aria-label="Go to login page"
                 >
