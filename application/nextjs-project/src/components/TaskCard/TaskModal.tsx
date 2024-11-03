@@ -13,6 +13,25 @@ const TaskModal: React.FC<TaskModalProps> = ({
   onDelete,
   onComplete,
 }) => {
+  const handleComplete = async () => {
+    try {
+      const response = await fetch(`/api/tasks`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: task._id }), // Send the task ID to mark as completed
+      });
+
+      if (response.ok) {
+        onComplete(); // Call the parent onComplete handler if successful
+      } else {
+        console.error("Failed to mark task as completed");
+      }
+    } catch (error) {
+      console.error("Error completing task:", error);
+    }
+  };
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
@@ -23,7 +42,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
         <p className="text-gray-700 mb-4">Description: {task.description}</p>
         <div className="flex justify-end space-x-4">
           <button
-            onClick={onComplete}
+            onClick={handleComplete}
             className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
           >
             Complete

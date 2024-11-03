@@ -31,7 +31,7 @@ const TaskBoard: React.FC = () => {
 
   const handleSearch = () => {
     let query = `?title=${title}&category=${category}`;
-    fetch(`/api/tasks/search${query}`)
+    fetch(`/api/tasks${query}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Check the data from the API
