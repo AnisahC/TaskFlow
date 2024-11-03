@@ -5,22 +5,18 @@ import { TaskList } from "@/components/TaskCard/TaskList";
 import { TaskStatus } from "@/components/TaskCard/types";
 import { BackButton } from "@/components/BackButton";
 
-const alltask: {
-  todo: { title: string; items: Task[] };
-  inProgress: { title: string; items: Task[] };
-  completed: { title: string; items: Task[] };
-} = {
+const alltask = {
   todo: {
     title: "TO DO",
-    items: [],
+    items: [] as Task[],
   },
   inProgress: {
     title: "IN PROGRESS",
-    items: [],
+    items: [] as Task[],
   },
   completed: {
     title: "COMPLETED",
-    items: [],
+    items: [] as Task[],
   },
 };
 
@@ -28,24 +24,6 @@ const TaskBoard: React.FC = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [searchResults, setSearchResults] = useState<any[]>([]); // Ensure it's always an array
-
-  const handleSearch = () => {
-    let query = `?title=${title}&category=${category}`;
-    fetch(`/api/tasks${query}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data); // Check the data from the API
-        // Ensure that 'data' is an array
-        if (Array.isArray(data)) {
-          setSearchResults(data);
-          alltask.todo.items = data;
-        } else {
-          setSearchResults([]); // Fallback to empty array if not
-        }
-      })
-      .catch((error) => console.error("Error searching tasks:", error));
-  };
-
   const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -58,7 +36,10 @@ const TaskBoard: React.FC = () => {
         }
         const data = await response.json();
         setTasks(data);
-        alltask.todo.items = data;
+        
+        // Categorize tasks based on their status
+        alltask.todo.items = data.filter((task: { isCompleted: any; }) => !task.isCompleted);
+        alltask.completed.items = data.filter((task: { isCompleted: any; }) => task.isCompleted);
       } catch (err) {
         setError((err as Error).message);
       }
@@ -66,6 +47,24 @@ const TaskBoard: React.FC = () => {
 
     fetchTasks();
   }, []);
+
+  const handleSearch = () => {
+    let query = `?title=${title}&category=${category}`;
+    fetch(`/api/tasks${query}`)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data); // Check the data from the API
+        if (Array.isArray(data)) {
+          setSearchResults(data);
+          // Update tasks array to reflect search results
+          alltask.todo.items = data.filter((task: Task) => !task.isCompleted);
+          alltask.completed.items = data.filter(task => task.isCompleted);
+        } else {
+          setSearchResults([]); // Fallback to empty array if not
+        }
+      })
+      .catch((error) => console.error("Error searching tasks:", error));
+  };
 
   if (error) {
     return <div>Error: {error}</div>;

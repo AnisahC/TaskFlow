@@ -24,7 +24,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
       });
 
       if (response.ok) {
-        onComplete(); // Call the parent onComplete handler if successful
+        window.location.reload(); // Reload the page to reflect the changes
       } else {
         console.error("Failed to mark task as completed");
       }

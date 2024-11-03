@@ -61,7 +61,7 @@ export async function PATCH(req: NextRequest) {
         await client.connect();
         const database = client.db('task_management');
         const tasksCollection = database.collection('task');
-        
+
         // Convert the string ID to an ObjectId
         const objectId = new ObjectId(id);
 
