@@ -29,16 +29,11 @@ const SignInForm: React.FC = () => {
               TaskFlow helps users to manage daily schedules and activities more
               effectively.
             </p>
-            {/* <img
-              src="/images/simple-clock.png"
-              alt="Simple clock"
-              className="absolute right-0 bottom-2 mt-24 max-md:mt-10 w-24 h-24 max-md:w-16 max-md:h-16"
-            /> */}
           </div>
         </section>
         <section className="flex flex-col w-[67%] ml-0 max-md:w-full">
           <div className="h-full flex overflow-hidden flex-col items-center pt-5 pr-5 pb-32 pl-20 mx-auto w-full text-base font-medium bg-white rounded-[40px_0px_0px_40px] text-stone-400 max-md:px-5 max-md:pb-24 max-md:mt-10 max-md:max-w-full">
-            <h2 className="self-start mt-12 mb-8 text-3xl font-extrabold text-black tracking-[3.2px] max-md:mt-10">
+            <h2 className="self-start mt-12 mb-8 text-3xl font-extrabold text-foreground tracking-[3.2px] max-md:mt-10">
               Log In
             </h2>
             <form

@@ -7,15 +7,15 @@ import { BackButton } from "@/components/BackButton";
 
 const alltask = {
   todo: {
-    title: "TO DO",
+    title: <span className="text-yellow-700 border-b-4 border-yellow-500 pb-1">TO DO</span>,
     items: [] as Task[],
   },
   inProgress: {
-    title: "IN PROGRESS",
+    title: <span className="text-blue-700 border-b-4 border-blue-500 pb-1">IN PROGRESS</span>,
     items: [] as Task[],
   },
   completed: {
-    title: "COMPLETED",
+    title: <span className="text-green-700 border-b-4 border-green-500 pb-1">COMPLETED</span>,
     items: [] as Task[],
   },
 };
