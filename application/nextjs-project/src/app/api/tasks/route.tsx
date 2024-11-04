@@ -82,3 +82,34 @@ export async function PATCH(req: NextRequest) {
         await client.close();
     }
 }
+
+// For deleting a task
+export async function DELETE(req: NextRequest) {
+    const { id } = await req.json(); // Expecting an id in the request body
+
+    if (!id) {
+        return NextResponse.json({ message: "Task ID is required" }, { status: 400 });
+    }
+
+    try {
+        await client.connect();
+        const database = client.db('task_management');
+        const tasksCollection = database.collection('task');
+
+        // Convert the string ID to an ObjectId
+        const objectId = new ObjectId(id);
+
+        const result = await tasksCollection.deleteOne({ _id: objectId });
+
+        if (result.deletedCount === 0) {
+            return NextResponse.json({ message: "No task found or no changes made" }, { status: 404 });
+        }
+
+        return NextResponse.json({ message: "Task deleted" }, { status: 200 });
+    } catch (error) {
+        console.error('Error deleting task:', error);
+        return NextResponse.json({ message: 'Error deleting task' }, { status: 500 });
+    } finally {
+        await client.close();
+    }
+}

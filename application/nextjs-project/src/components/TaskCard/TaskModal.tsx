@@ -13,6 +13,29 @@ const TaskModal: React.FC<TaskModalProps> = ({
   onDelete,
   onComplete,
 }) => {
+
+  // Function to delete a task
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`/api/tasks`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: task._id }), // Send the task ID to delete
+      });
+
+      if (response.ok) {
+        window.location.reload(); // Reload the page to reflect the changes
+      } else {
+        console.error("Failed to delete task");
+      }
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
+  };
+
+  // Function to mark a task as completed
   const handleComplete = async () => {
     try {
       const response = await fetch(`/api/tasks`, {
@@ -32,6 +55,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
       console.error("Error completing task:", error);
     }
   };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
@@ -48,7 +72,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
             Complete
           </button>
           <button
-            onClick={onDelete}
+            onClick={handleDelete}
             className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700"
           >
             Delete
