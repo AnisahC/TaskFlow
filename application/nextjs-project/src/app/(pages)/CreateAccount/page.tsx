@@ -11,9 +11,36 @@ const SignupForm: React.FC = () => {
     password: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  };
+
+    try {
+        const response = await fetch('/api/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            alert("Registration successful");
+            // Optionally, redirect to login page
+        } else {
+            const errorData = await response.json();
+            alert(`Error: ${errorData.message}`);
+        }
+    } catch (error) {
+        console.error("Error registering user:", error);
+        alert("An error occurred during registration.");
+    }
+    setFormData({
+      fullName: "",
+      email: "",
+      password: "",
+    });
+};
+
 
   const handleInputChange =
     (field: keyof SignupFormData) =>
