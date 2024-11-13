@@ -4,9 +4,9 @@ const AddTasksLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   return (
-    <div>
-      <main>{children}</main>
-    </div>
+    <main className="bg-lavender min-h-screen">
+      {children}
+    </main>
   );
 };
 
