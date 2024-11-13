@@ -1,6 +1,6 @@
 import React from "react";
 import { Task } from "./types";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 interface TaskModalProps {
   task: Task;
@@ -16,9 +16,12 @@ const TaskModal: React.FC<TaskModalProps> = ({
   onComplete,
 }) => {
   const router = useRouter();
+
   const handleReload = () => {
-    router.reload();
+    // router.reload(); // Didn't work 
+    window.location.reload(); // Keep for now to ensure working state
   };
+
   // Function to delete a task
   const handleDelete = async () => {
     try {
