@@ -4,7 +4,7 @@ import { TaskCard } from "./TaskCard";
 import { Task, TaskStatus } from "./types";
 
 interface TaskListProps {
-  title: string;
+  title: React.ReactNode;
   items: Task[];
   status: TaskStatus;
 }

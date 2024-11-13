@@ -1,5 +1,6 @@
 "use client";
 import * as React from "react";
+import { useRouter } from "next/navigation";
 
 interface BackButtonProps {
   text: string;
@@ -7,11 +8,13 @@ interface BackButtonProps {
 }
 
 export const BackButton: React.FC<BackButtonProps> = ({ text, iconSrc }) => {
+  const router = useRouter();
+
   return (
     <nav className="flex flex-col text-lg tracking-tight leading-none text-blue-500 whitespace-nowrap max-w-[74px]">
       <button
         className="flex gap-1.5 items-center px-2.5 py-2.5"
-        onClick={() => window.history.back()}
+        onClick={() => router.back()}
       >
         <img
           loading="lazy"

@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 interface RecentTaskProps {
   name: string;
@@ -16,11 +16,11 @@ const RecentTask: React.FC<RecentTaskProps> = ({ name, daysAgo }) => (
 );
 
 const RecentlyFinishedCard: React.FC = () => {
+  const router = useRouter();
   const recentTasks = [{ name: "take mom to airport", daysAgo: 8 }];
-  const navigate = useNavigate();
+
   const handleMenuItemClick = (path: string) => {
-    navigate(path);
-    window.location.href = path;
+    router.push(path);
   };
 
   return (

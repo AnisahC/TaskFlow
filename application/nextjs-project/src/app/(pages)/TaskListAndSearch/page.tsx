@@ -7,15 +7,27 @@ import { BackButton } from "@/components/BackButton";
 
 const alltask = {
   todo: {
-    title: <span className="text-yellow-700 border-b-4 border-yellow-500 pb-1">TO DO</span>,
+    title: (
+      <span className="text-yellow-700 border-b-4 border-yellow-500 pb-1">
+        TO DO
+      </span>
+    ),
     items: [] as Task[],
   },
   inProgress: {
-    title: <span className="text-blue-700 border-b-4 border-blue-500 pb-1">IN PROGRESS</span>,
+    title: (
+      <span className="text-blue-700 border-b-4 border-blue-500 pb-1">
+        IN PROGRESS
+      </span>
+    ),
     items: [] as Task[],
   },
   completed: {
-    title: <span className="text-green-700 border-b-4 border-green-500 pb-1">COMPLETED</span>,
+    title: (
+      <span className="text-green-700 border-b-4 border-green-500 pb-1">
+        COMPLETED
+      </span>
+    ),
     items: [] as Task[],
   },
 };
@@ -36,10 +48,14 @@ const TaskBoard: React.FC = () => {
         }
         const data = await response.json();
         setTasks(data);
-        
+
         // Categorize tasks based on their status
-        alltask.todo.items = data.filter((task: { isCompleted: any; }) => !task.isCompleted);
-        alltask.completed.items = data.filter((task: { isCompleted: any; }) => task.isCompleted);
+        alltask.todo.items = data.filter(
+          (task: { isCompleted: any }) => !task.isCompleted
+        );
+        alltask.completed.items = data.filter(
+          (task: { isCompleted: any }) => task.isCompleted
+        );
       } catch (err) {
         setError((err as Error).message);
       }
@@ -58,7 +74,10 @@ const TaskBoard: React.FC = () => {
           setSearchResults(data);
           // Update tasks array to reflect search results
           alltask.todo.items = data.filter((task: Task) => !task.isCompleted);
-          alltask.completed.items = data.filter(task => task.isCompleted);
+          console.log(alltask.todo.items);
+          alltask.completed.items = data.filter(
+            (task: Task) => task.isCompleted
+          );
         } else {
           setSearchResults([]); // Fallback to empty array if not
         }

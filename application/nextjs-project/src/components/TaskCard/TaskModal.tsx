@@ -1,5 +1,7 @@
 import React from "react";
 import { Task } from "./types";
+import { useRouter } from "next/router";
+
 interface TaskModalProps {
   task: Task;
   onClose: () => void;
@@ -13,7 +15,10 @@ const TaskModal: React.FC<TaskModalProps> = ({
   onDelete,
   onComplete,
 }) => {
-
+  const router = useRouter();
+  const handleReload = () => {
+    router.reload();
+  };
   // Function to delete a task
   const handleDelete = async () => {
     try {
@@ -26,7 +31,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
       });
 
       if (response.ok) {
-        window.location.reload(); // Reload the page to reflect the changes
+        handleReload();
       } else {
         console.error("Failed to delete task");
       }
@@ -47,7 +52,7 @@ const TaskModal: React.FC<TaskModalProps> = ({
       });
 
       if (response.ok) {
-        window.location.reload(); // Reload the page to reflect the changes
+        handleReload();
       } else {
         console.error("Failed to mark task as completed");
       }

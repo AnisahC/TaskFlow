@@ -1,7 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 interface MenuItemProps {
   icon: string;
@@ -25,20 +26,21 @@ const MenuItem: React.FC<MenuItemProps> = ({
     : "text-stone-900";
 
   return (
-    <Link
-      to={to}
-      onClick={onClick}
-      className={`flex flex-col justify-center p-4 w-full ${activeClasses}`}
-    >
-      <div className={baseClasses}>
-        <img
-          loading="lazy"
-          src={icon}
-          alt=""
-          className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
-        />
-        <div className="flex-1 shrink self-stretch my-auto basis-0">
-          {label}
+    <Link href={to} passHref>
+      <div
+        onClick={onClick}
+        className={`flex flex-col justify-center p-4 w-full ${activeClasses}`}
+      >
+        <div className={baseClasses}>
+          <img
+            loading="lazy"
+            src={icon}
+            alt=""
+            className="object-contain shrink-0 self-stretch my-auto w-5 aspect-square"
+          />
+          <div className="flex-1 shrink self-stretch my-auto basis-0">
+            {label}
+          </div>
         </div>
       </div>
     </Link>
@@ -46,15 +48,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
 };
 
 const Sidebar: React.FC = () => {
-  const location = useLocation();
-  const [activeItem, setActiveItem] = useState<string>(location.pathname);
+  const router = useRouter();
+  const pathname = usePathname();
+  const [activeItem, setActiveItem] = useState<string>(pathname);
+
   useEffect(() => {
-    setActiveItem(location.pathname);
-  }, [location.pathname]);
-  const navigate = useNavigate();
+    setActiveItem(pathname);
+  }, [pathname]);
+
   const handleMenuItemClick = (path: string) => {
-    navigate(path);
-    window.location.href = path;
+    router.push(path);
   };
 
   return (
@@ -77,8 +80,8 @@ const Sidebar: React.FC = () => {
         <MenuItem
           icon="https://cdn.builder.io/api/v1/image/assets/TEMP/95c6970b609598c2e23104d55fa6004300948c1597ac8b8e0a66f2280f698042?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
           label="My Colour Theme"
-          to="/my-colour-theme"
-          isActive={activeItem === "/my-colour-theme"}
+          to="/MyCenter/my-colour-theme"
+          isActive={activeItem === "/MyCenter/my-colour-theme"}
           onClick={() => handleMenuItemClick("/MyCenter/my-colour-theme")}
         />
       </div>

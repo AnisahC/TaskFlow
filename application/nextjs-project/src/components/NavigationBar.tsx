@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 interface NavigationBarProps {
   iconSrc: string;
@@ -13,15 +13,16 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   notificationIconSrc,
 }) => {
   const [isSwitchOn, setIsSwitchOn] = useState(false);
+  const router = useRouter();
+
   const handleSwitchChange = () => {
     setIsSwitchOn(!isSwitchOn);
   };
 
-  const navigate = useNavigate();
   const handleImageClick = () => {
-    navigate("/CreateAccount");
-    window.location.href = "/CreateAccount";
+    router.push("/CreateAccount");
   };
+
   return (
     <header className="flex flex-wrap gap-10 items-start px-7 py-5 w-full bg-stone-500 max-md:px-5 max-md:max-w-full">
       <nav>
