@@ -7,11 +7,9 @@ const uri =
 const client = new MongoClient(uri);
 
 export async function POST(req: NextRequest) {
-  console.log('Inside POST function');
 
   const { fullName, email, password } = await req.json();
 
-  console.log('Received data:', { fullName, email, password });
   if (!fullName || !email || !password) {
     return NextResponse.json(
       { message: "All fields are required" },
@@ -20,7 +18,6 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    console.log('Connecting to database');
     await client.connect();
     const database = client.db("task_management");
     const usersCollection = database.collection("users");
@@ -28,7 +25,6 @@ export async function POST(req: NextRequest) {
     // Check if user already exists
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
-      console.log('User already exists');
       return NextResponse.json(
         { message: "User already exists" },
         { status: 400 }
@@ -36,13 +32,11 @@ export async function POST(req: NextRequest) {
     }
 
     // Hash the password
-    console.log('Hashing password');
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create and insert new user
     const newUser = { fullName, email, password: hashedPassword };
     await usersCollection.insertOne(newUser);
-    console.log('User registered successfully');
 
     return NextResponse.json(
       { message: "User registered successfully" },
