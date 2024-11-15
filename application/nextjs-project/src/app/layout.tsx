@@ -38,12 +38,6 @@ function Navbar() {
         <li>
           <Link href="/MyCenter">My Center</Link>
         </li>
-        <li>
-          <Link href="/testing/list">List Tasks</Link>
-        </li>
-        <li>
-          <Link href="/testing/search">Search Tasks</Link>
-        </li>
       </ul>
     </nav>
   );
