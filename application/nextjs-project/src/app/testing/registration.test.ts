@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { POST } from '../../app/api/users/route'; // Make sure this path is correct
+import { POST } from '../../app/api/users/route'; 
 
 describe('POST /api/users - Registration Validation', () => {
     it('should return 201 status for successful registration', async () => {
@@ -7,7 +7,7 @@ describe('POST /api/users - Registration Validation', () => {
         const req = {
             json: jest.fn().mockResolvedValue({
                 fullName: 'testuser',
-                email: 'testhello@gmail.com',
+                email: 'letssee@gmail.com',
                 password: 'testpassword',
             }),
 

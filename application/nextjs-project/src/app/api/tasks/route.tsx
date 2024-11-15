@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
         const tasksCollection = database.collection('task');
 
         const result = await tasksCollection.insertOne(newTask);
-        return NextResponse.json({ id: result.insertedId, ...newTask }, { status: 201 });
+        return NextResponse.json({ message: 'Task added' },{ status: 201 });
     } catch (error) {
         console.error('Error inserting task:', error);
         return NextResponse.json({ message: 'Error inserting task' }, { status: 500 });
