@@ -39,6 +39,9 @@ function Navbar() {
           <Link href="/MyCenter">My Center</Link>
         </li>
         <li>
+          <Link href="/CalendarMonthly">Calendar</Link>
+        </li>
+        <li>
           <Link href="/testing/list">List Tasks</Link>
         </li>
         <li>
