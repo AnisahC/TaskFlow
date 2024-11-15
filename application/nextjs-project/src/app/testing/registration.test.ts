@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { POST } from '../../app/api/users/route'; 
 
-describe('POST /api/users - Registration Validation', () => {
+describe('/api/users - Registration Validation', () => {
     it('should return 201 status for successful registration', async () => {
         // Mock the necessary NextRequest behavior
         const req = {
