@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { POST, GET } from '../../app/api/tasks/route'; 
+import { POST, GET } from '../src/app/api/tasks/route'; 
 
 describe('/api/tasks - Task Validation', () => {
     it('should return 201 status for successful task addition', async () => {
