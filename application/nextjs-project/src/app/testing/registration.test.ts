@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { POST } from '../../app/api/users/route'; 
+import { POST } from '../api/register/route'; 
 
 describe('/api/users - Registration Validation', () => {
     it('should return 201 status for successful registration', async () => {

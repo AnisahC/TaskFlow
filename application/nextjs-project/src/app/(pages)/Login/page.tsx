@@ -9,8 +9,31 @@ const SignInForm: React.FC = () => {
     password: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    try {
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Login successful:", data);
+        alert("Login successful");
+        // Redirect or handle login success
+      } else {
+        const errorData = await response.json();
+        alert(errorData.message || "Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("An unexpected error occurred");
+    }
   };
 
   const handleInputChange =
@@ -75,7 +98,7 @@ const SignInForm: React.FC = () => {
               <button
                 type="submit"
                 className="overflow-hidden self-center px-16 pt-2 pb-5 mt-16 w-full text-xl font-semibold rounded-xl bg-stone-500 max-w-[405px] text-orange-950 hover:bg-stone-600 transition-colors focus:outline-none focus:ring-2 focus:ring-stone-400 disabled:opacity-50 disabled:cursor-not-allowed max-md:px-5 max-md:mt-10"
-                aria-label="Create new account"
+                aria-label="sign in"
               >
                 Sign In
               </button>
@@ -87,3 +110,5 @@ const SignInForm: React.FC = () => {
   );
 };
 export default SignInForm;
+
+
