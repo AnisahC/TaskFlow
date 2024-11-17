@@ -38,6 +38,10 @@ function Navbar() {
         <li>
           <Link href="/MyCenter">My Center</Link>
         </li>
+        <li>
+          <Link href="/CalendarMonthly">Calendar</Link>
+        </li>
+
       </ul>
     </nav>
   );
