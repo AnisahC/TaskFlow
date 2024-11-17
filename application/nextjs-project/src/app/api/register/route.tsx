@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { MongoClient, ObjectId } from "mongodb";
 import bcrypt from "bcrypt";
 
-const uri =
-  "mongodb+srv://anisahc:Junaki720@task-management.vazts.mongodb.net/?retryWrites=true&w=majority&appName=Task-Management";
+const uri = "mongodb+srv://anisahc:Junaki720@task-management.vazts.mongodb.net/?retryWrites=true&w=majority&appName=Task-Management";
 const client = new MongoClient(uri);
 
 export async function POST(req: NextRequest) {
+
   const { fullName, email, password } = await req.json();
 
   if (!fullName || !email || !password) {
