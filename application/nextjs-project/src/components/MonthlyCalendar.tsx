@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { Task } from "@/components/TaskCard/types";
-
+import { Modak } from "next/font/google";
 // Constants for days and months
 const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const monthNames = [
@@ -18,7 +18,10 @@ const monthNames = [
   "November",
   "December",
 ];
-
+const modak = Modak({
+  subsets: ["latin"],
+  weight: "400",
+});
 const Calendar: React.FC = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -58,29 +61,23 @@ const Calendar: React.FC = () => {
     fetchTasks();
   }, [currentDate]);
 
+  const parseDate = (dateString: string) => {
+    const [year, month, day] = dateString.split("-").map(Number);
+    return new Date(year, month - 1, day);
+  };
   // Function to check if a task falls on a specific date
   const isTaskOnDate = (task: Task, date: Date) => {
-    const taskStartDate = new Date(task.startDate);
-    const taskEndDate = new Date(task.endDate);
+    const taskStartDate = parseDate(task.startDate);
+    const taskEndDate = parseDate(task.endDate);
 
     // Ignore the time part of the date
-    const taskStartDateOnly = new Date(
-      taskStartDate.getFullYear(),
-      taskStartDate.getMonth(),
-      taskStartDate.getDate()
-    );
-    const taskEndDateOnly = new Date(
-      taskEndDate.getFullYear(),
-      taskEndDate.getMonth(),
-      taskEndDate.getDate()
-    );
     const dateOnly = new Date(
       date.getFullYear(),
       date.getMonth(),
       date.getDate()
     );
 
-    return dateOnly >= taskStartDateOnly && dateOnly <= taskEndDateOnly;
+    return dateOnly >= taskStartDate && dateOnly <= taskEndDate;
   };
 
   // Function to handle month change
@@ -96,49 +93,60 @@ const Calendar: React.FC = () => {
   };
 
   return (
-    <div className="w-4/5 mx-auto p-4">
+    <div className="w-4/5 max-h-full mx-auto p-10">
       {/* Month and Year with Navigation */}
       <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center">
-          <label htmlFor="month" className="mr-2">
-            Month:
-          </label>
-          <select
-            id="month"
-            value={month}
-            onChange={handleMonthChange}
-            className="border rounded p-1"
-          >
-            {monthNames.map((monthName, index) => (
-              <option key={index} value={index}>
-                {monthName}
-              </option>
-            ))}
-          </select>
+        {/* Display selected month and year */}
+        <div
+          className={`text-center text-5xl font-extrabold text-blue-300 mb-6 ${modak.className}`}
+        >
+          {monthNames[month]} {year}
         </div>
-        <div className="flex items-center">
-          <label htmlFor="year" className="mr-2">
-            Year:
-          </label>
-          <select
-            id="year"
-            value={year}
-            onChange={handleYearChange}
-            className="border rounded p-1"
-          >
-            {Array.from({ length: 10 }, (_, i) => year - 5 + i).map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+
+        <div className="flex items-center text-xs space-x-4">
+          <div className="flex items-center">
+            <label htmlFor="month" className="mr-2 text-gray-700 font-medium">
+              Month:
+            </label>
+            <select
+              id="month"
+              value={month}
+              onChange={handleMonthChange}
+              className="border border-gray-300 rounded-lg p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
+            >
+              {monthNames.map((monthName, index) => (
+                <option key={index} value={index}>
+                  {monthName}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="flex items-center">
+            <label htmlFor="year" className="mr-2 text-gray-700 font-medium">
+              Year:
+            </label>
+            <select
+              id="year"
+              value={year}
+              onChange={handleYearChange}
+              className="border border-gray-300 rounded-lg p-2 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
+            >
+              {Array.from({ length: 10 }, (_, i) => year - 5 + i).map(
+                (year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                )
+              )}
+            </select>
+          </div>
         </div>
       </div>
 
       {/* Days of the Week Header */}
       <div className="grid grid-cols-7 text-center text-gray-700 font-medium">
         {daysOfWeek.map((day) => (
-          <div key={day} className="py-2 border">
+          <div key={day} className="py-2 font-bold">
             {day}
           </div>
         ))}
@@ -165,14 +173,25 @@ const Calendar: React.FC = () => {
               {/* Tasks for the current date */}
               {tasks
                 .filter((task) => isTaskOnDate(task, currentDate))
-                .map((task, taskIndex) => (
-                  <div
-                    key={taskIndex}
-                    className="mt-1 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-md w-full"
-                  >
-                    {task.title}
-                  </div>
-                ))}
+                .map((task, taskIndex) => {
+                  const Color =
+                    task.priority === "High"
+                      ? "bg-red-200"
+                      : task.priority === "Medium"
+                      ? "bg-yellow-200"
+                      : task.priority === "Low"
+                      ? "bg-green-200"
+                      : "bg-gray-200"; // Default for no specific priority
+
+                  return (
+                    <div
+                      key={taskIndex}
+                      className={`mt-1 text-xs px-2 py-1 rounded-md w-full ${Color}`}
+                    >
+                      {task.title}
+                    </div>
+                  );
+                })}
             </div>
           );
         })}
