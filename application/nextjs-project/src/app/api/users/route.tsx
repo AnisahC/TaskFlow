@@ -6,7 +6,6 @@ const uri = "mongodb+srv://anisahc:Junaki720@task-management.vazts.mongodb.net/?
 const client = new MongoClient(uri);
 
 export async function POST(req: NextRequest) {
-
   const { fullName, email, password } = await req.json();
 
   if (!fullName || !email || !password) {
@@ -34,7 +33,13 @@ export async function POST(req: NextRequest) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Create and insert new user
-    const newUser = { fullName, email, password: hashedPassword };
+    const newUser = { 
+      fullName, 
+      email, 
+      password: hashedPassword, 
+      myPoints: 0 // Default value for myPoints
+    };
+
     await usersCollection.insertOne(newUser);
 
     return NextResponse.json(
