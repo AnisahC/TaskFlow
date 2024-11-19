@@ -9,6 +9,7 @@ interface TaskCardProps {
   date: string;
   time?: string;
   description: string;
+  isCompleted?: boolean;
   onClick: () => void;
 }
 
@@ -18,16 +19,20 @@ export function TaskCard({
   time,
   title,
   description,
+  isCompleted,
   category,
   onClick,
 }: TaskCardProps) {
   const priorities = Array.isArray(priority) ? priority : [priority];
 
   // Determine border color based on priority level
-  const borderColor = priorities.includes("High") ? "border-red-500" :
-                      priorities.includes("Medium") ? "border-yellow-500" :
-                      priorities.includes("Low") ? "border-green-500" :
-                      "border-gray-300"; // Default for no specific priority
+  const borderColor = priorities.includes("High")
+    ? "border-red-500"
+    : priorities.includes("Medium")
+    ? "border-yellow-500"
+    : priorities.includes("Low")
+    ? "border-green-500"
+    : "border-gray-300"; // Default for no specific priority
 
   return (
     <article
