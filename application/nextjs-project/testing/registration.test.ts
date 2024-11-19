@@ -7,7 +7,7 @@ describe('/api/users - Registration Validation', () => {
         const req = {
             json: jest.fn().mockResolvedValue({
                 fullName: 'testuser',
-                email: 'lesee@gmail.com',
+                email: 'le6ee@gmail.com',
                 password: 'testpassword',
             }),
 
