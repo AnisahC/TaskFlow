@@ -2,7 +2,8 @@ import React from "react";
 import WelcomeCard from "@/components/WelcomeDashboard";
 
 const userName = "User";
-const userId = "123456789";
+const showId = "123456789";
+const userId = "67380aa82f7c752dc3392ecf";
 const account = "qdnqlkj@gmail.com";
 
 const OverviewPage: React.FC = () => {
@@ -15,7 +16,7 @@ const OverviewPage: React.FC = () => {
         <section className="flex flex-col whitespace-nowrap">
           <h2 className="text-xs text-blue-700">USER ID</h2>
           <div className="flex gap-1 items-center mt-1 text-base font-medium text-blue-900">
-            {userId}
+            {showId}
             <img
               loading="lazy"
               src="https://example.com/user_icon.png"
