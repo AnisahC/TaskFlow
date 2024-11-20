@@ -8,8 +8,8 @@ interface RecentTaskProps {
 
 const RecentTask: React.FC<RecentTaskProps> = ({ name, daysAgo }) => (
   <div className="flex flex-col justify-center py-3 pr-4 pl-10 w-full max-md:pl-5">
-    <div className="text-sm text-stone-900">{name}</div>
-    <div className="mt-2 text-xs text-stone-900 text-opacity-40">
+    <div className="text-sm text-pink-700">{name}</div>
+    <div className="mt-2 text-xs text-green-700 text-opacity-80">
       {daysAgo} Days ago
     </div>
   </div>
@@ -24,12 +24,12 @@ const RecentlyFinishedCard: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col py-6 mt-8 w-full leading-tight bg-white rounded-2xl border border-solid border-stone-900 border-opacity-10 max-w-[408px]">
+    <div className="flex flex-col py-6 mt-8 w-full leading-tight bg-pink-50 rounded-2xl border border-solid border-green-300 max-w-[408px] shadow-md">
       <div className="flex gap-10 justify-between items-center px-10 w-full min-h-[48px] max-md:px-5">
-        <h2 className="self-stretch my-auto text-xl font-bold text-stone-900">
+        <h2 className="self-stretch my-auto text-xl font-bold text-green-700">
           Recently Finished
         </h2>
-        <div className="flex gap-1 items-center self-stretch my-auto text-sm text-stone-900 text-opacity-40">
+        <div className="flex gap-1 items-center self-stretch my-auto text-sm text-green-700 hover:text-pink-700">
           <div
             className="self-stretch my-auto hover:cursor-pointer"
             onClick={() => handleMenuItemClick("/TaskListAndSearch")}
