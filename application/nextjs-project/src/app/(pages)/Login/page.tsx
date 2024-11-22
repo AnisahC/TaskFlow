@@ -1,13 +1,42 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { InputField } from "@/components/InputField";
 import { LoginFormData } from "@/components/types";
+import { useRouter } from "next/navigation";
+import Logout from "@/components/Logout";
 
 const SignInForm: React.FC = () => {
+  const router = useRouter();
+  // verify user status
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
   });
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("/api/auth", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (response.status === 200) {
+          setAuthenticated(true);
+        } else {
+          setAuthenticated(false);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,6 +55,7 @@ const SignInForm: React.FC = () => {
         console.log("Login successful:", data);
         alert("Login successful");
         // Redirect or handle login success
+        router.push("/MyCenter");
       } else {
         const errorData = await response.json();
         alert(errorData.message || "Login failed");
@@ -42,8 +72,20 @@ const SignInForm: React.FC = () => {
       setFormData({ ...formData, [field]: e.target.value });
     };
 
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-4xl">
+        Loading...
+      </div>
+    );
+  }
+
+  if (authenticated) {
+    return <Logout />;
+  }
+
   return (
-    <main className=" bg-stone-300 h-screen">
+    <main className="bg-stone-300 h-screen">
       <div className="flex gap-5 max-md:flex-col h-full">
         <section className="relative flex pl-10 flex-col w-[33%] max-md:ml-0 max-md:w-full">
           <div className="flex flex-col mt-8 text-2xl tracking-tight text-orange-950 max-md:mt-10 max-md:max-w-full">
@@ -109,6 +151,5 @@ const SignInForm: React.FC = () => {
     </main>
   );
 };
+
 export default SignInForm;
-
-
