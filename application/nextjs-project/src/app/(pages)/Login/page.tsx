@@ -25,6 +25,7 @@ const SignInForm: React.FC = () => {
         });
         if (response.status === 200) {
           setAuthenticated(true);
+          setPopupMessage("Login successful");
         } else {
           setAuthenticated(false);
         }
@@ -41,7 +42,6 @@ const SignInForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
       const response = await fetch("/api/login", {
         method: "POST",
@@ -55,8 +55,8 @@ const SignInForm: React.FC = () => {
         const data = await response.json();
         console.log("Login successful:", data);
         setPopupMessage("Login successful");
-        // Redirect or handle login success
-        router.push("/MyCenter");
+        // // Redirect or handle login success
+        // router.push("/MyCenter");
       } else {
         const errorData = await response.json();
         setPopupMessage(errorData.message || "Login failed");
@@ -85,7 +85,10 @@ const SignInForm: React.FC = () => {
     return <Logout />;
   }
 
-  const closePopup = () => setPopupMessage(null);
+  const closePopup = () => {
+    setPopupMessage(null);
+    router.push("/MyCenter");
+  };
 
   return (
     <main className="bg-pink-50 min-h-screen flex items-center justify-center">
@@ -93,7 +96,9 @@ const SignInForm: React.FC = () => {
       {popupMessage && (
         <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-xl shadow-lg p-6 text-center w-[90%] max-w-md">
-            <p className="text-green-800 text-lg font-semibold">{popupMessage}</p>
+            <p className="text-green-800 text-lg font-semibold">
+              {popupMessage}
+            </p>
             <button
               onClick={closePopup}
               className="mt-4 px-6 py-2 bg-green-700 text-white font-semibold rounded-lg hover:bg-green-800 transition-colors focus:outline-none"

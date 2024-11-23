@@ -14,7 +14,7 @@ const SignupForm: React.FC = () => {
   // verify user status
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
-  
+
   // check if user is authenticated
   useEffect(() => {
     const checkAuth = async () => {
@@ -37,7 +37,7 @@ const SignupForm: React.FC = () => {
     };
     checkAuth();
   }, []);
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -61,6 +61,7 @@ const SignupForm: React.FC = () => {
         // Optionally, redirect to login page
       } else {
         const errorData = await response.json();
+        console.error(`Error: ${errorData.message}`);
         setPopupMessage(`Error: ${errorData.message}`);
       }
     } catch (error) {
@@ -100,7 +101,9 @@ const SignupForm: React.FC = () => {
       {popupMessage && (
         <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-xl shadow-lg p-6 text-center w-[90%] max-w-md">
-            <p className="text-green-800 text-lg font-semibold">{popupMessage}</p>
+            <p className="text-green-800 text-lg font-semibold">
+              {popupMessage}
+            </p>
             <button
               onClick={closePopup}
               className="mt-4 px-6 py-2 bg-green-700 text-white font-semibold rounded-lg hover:bg-green-800 transition-colors focus:outline-none"
