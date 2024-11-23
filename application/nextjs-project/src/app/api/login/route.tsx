@@ -6,8 +6,7 @@ import jwt from "jsonwebtoken";
 const uri =
   "mongodb+srv://anisahc:Junaki720@task-management.vazts.mongodb.net/?retryWrites=true&w=majority&appName=Task-Management";
 const client = new MongoClient(uri);
-
-const JWT_SECRET = "I_am_a_SECRET";
+const JWT_SECRET = process.env.JWT_SECRET || "I_am_a_SECRET";
 
 export async function POST(req: NextRequest) {
   try {
