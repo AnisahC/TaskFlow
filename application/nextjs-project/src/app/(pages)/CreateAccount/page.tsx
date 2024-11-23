@@ -57,18 +57,14 @@ const SignupForm: React.FC = () => {
       });
 
       if (response.ok) {
-        // alert("Registration successful");
         setPopupMessage("Registration successful");
         // Optionally, redirect to login page
       } else {
         const errorData = await response.json();
-        // alert(`Error: ${errorData.message}`);
         setPopupMessage(`Error: ${errorData.message}`);
       }
     } catch (error) {
       console.error("Error registering user:", error);
-      // alert("An error occurred during registration.");
-      // setPopupMessage("Registration successful");
       setPopupMessage("An error occurred during registration.");
     }
 
