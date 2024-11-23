@@ -1,14 +1,43 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { InputField } from "@/components/InputField";
 import { LoginFormData } from "@/components/types";
+import { useRouter } from "next/navigation";
+import Logout from "@/components/Logout";
 
 const SignInForm: React.FC = () => {
+  const router = useRouter();
+  // verify user status
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState<LoginFormData>({
     email: "",
     password: "",
   });
   const [popupMessage, setPopupMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("/api/auth", {
+          method: "GET",
+          credentials: "include",
+        });
+        if (response.status === 200) {
+          setAuthenticated(true);
+        } else {
+          setAuthenticated(false);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        setAuthenticated(false);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,6 +56,7 @@ const SignInForm: React.FC = () => {
         console.log("Login successful:", data);
         setPopupMessage("Login successful");
         // Redirect or handle login success
+        router.push("/MyCenter");
       } else {
         const errorData = await response.json();
         setPopupMessage(errorData.message || "Login failed");
@@ -42,6 +72,18 @@ const SignInForm: React.FC = () => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setFormData({ ...formData, [field]: e.target.value });
     };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen text-4xl">
+        Loading...
+      </div>
+    );
+  }
+
+  if (authenticated) {
+    return <Logout />;
+  }
 
   const closePopup = () => setPopupMessage(null);
 
