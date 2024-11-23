@@ -40,17 +40,28 @@ export function TaskList({ title, items, status }: TaskListProps) {
           category={item.category}
           date={item.startDate}
           description={item.description}
+          isCompleted={item.isCompleted}
           onClick={() => handleCardClick(item)}
         />
       ))}
-      {selectedTask && (
-        <TaskModal
-          task={selectedTask}
-          onClose={handleCloseModal}
-          onDelete={handleDeleteTask}
-          onComplete={handleCompleteTask}
-        />
-      )}
+      {selectedTask &&
+        (selectedTask.isCompleted ? (
+          <TaskModal
+            task={selectedTask}
+            onClose={handleCloseModal}
+            onDelete={handleDeleteTask}
+            onComplete={handleCompleteTask}
+            modalType="completed"
+          />
+        ) : (
+          <TaskModal
+            task={selectedTask}
+            onClose={handleCloseModal}
+            onDelete={handleDeleteTask}
+            onComplete={handleCompleteTask}
+            modalType="incomplete"
+          />
+        ))}
     </section>
   );
 }

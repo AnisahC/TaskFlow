@@ -14,14 +14,14 @@ const alltask = {
     ),
     items: [] as Task[],
   },
-  inProgress: {
-    title: (
-      <span className="text-blue-700 border-b-4 border-blue-500 pb-1">
-        IN PROGRESS
-      </span>
-    ),
-    items: [] as Task[],
-  },
+  // inProgress: {
+  //   title: (
+  //     <span className="text-blue-700 border-b-4 border-blue-500 pb-1">
+  //       IN PROGRESS
+  //     </span>
+  //   ),
+  //   items: [] as Task[],
+  // },
   completed: {
     title: (
       <span className="text-green-700 border-b-4 border-green-500 pb-1">

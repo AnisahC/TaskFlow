@@ -22,8 +22,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   const baseClasses =
     "flex gap-3 items-center px-5 py-3.5 w-full rounded-3xl min-h-[48px]";
   const activeClasses = isActive
-    ? "bg-emerald-50 text-teal-500"
-    : "text-stone-900";
+    ? "bg-pink-100 text-green-700 font-semibold"
+    : "text-pink-700 hover:bg-pink-50 hover:text-green-600";
 
   return (
     <Link href={to} passHref>
@@ -62,7 +62,7 @@ const Sidebar: React.FC = () => {
 
   return (
     <nav className="flex flex-col w-[19%] max-md:ml-0 max-md:w-full">
-      <div className="flex flex-col grow pb-96 w-full text-base font-medium leading-tight shadow-sm bg-stone-50 min-h-[922px] max-md:pb-24 ">
+      <div className="flex flex-col grow pb-96 w-full text-base font-medium leading-tight shadow-sm bg-pink-50 min-h-[922px] max-md:pb-24 rounded-lg">
         <MenuItem
           icon="https://cdn.builder.io/api/v1/image/assets/TEMP/2245afc7abcdfb022e33ee91eb9d9b353cee40d5981849070729b95b47ac801d?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
           label="Overview"

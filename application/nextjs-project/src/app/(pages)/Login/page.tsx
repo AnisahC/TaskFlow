@@ -14,6 +14,7 @@ const SignInForm: React.FC = () => {
     email: "",
     password: "",
   });
+  const [popupMessage, setPopupMessage] = useState<string | null>(null);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -53,16 +54,16 @@ const SignInForm: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         console.log("Login successful:", data);
-        alert("Login successful");
+        setPopupMessage("Login successful");
         // Redirect or handle login success
         router.push("/MyCenter");
       } else {
         const errorData = await response.json();
-        alert(errorData.message || "Login failed");
+        setPopupMessage(errorData.message || "Login failed");
       }
     } catch (error) {
       console.error("Error during login:", error);
-      alert("An unexpected error occurred");
+      setPopupMessage("An unexpected error occurred");
     }
   };
 
@@ -84,69 +85,76 @@ const SignInForm: React.FC = () => {
     return <Logout />;
   }
 
+  const closePopup = () => setPopupMessage(null);
+
   return (
-    <main className="bg-stone-300 h-screen">
-      <div className="flex gap-5 max-md:flex-col h-full">
-        <section className="relative flex pl-10 flex-col w-[33%] max-md:ml-0 max-md:w-full">
-          <div className="flex flex-col mt-8 text-2xl tracking-tight text-orange-950 max-md:mt-10 max-md:max-w-full">
-            <h1 className="self-start font-bold">TaskFlow</h1>
-            <p className="mt-24 max-md:mt-10 max-md:max-w-full">
-              TaskFlow helps users to manage daily schedules and activities more
-              effectively.
-            </p>
-          </div>
-        </section>
-        <section className="flex flex-col w-[67%] ml-0 max-md:w-full">
-          <div className="h-full flex overflow-hidden flex-col items-center pt-5 pr-5 pb-32 pl-20 mx-auto w-full text-base font-medium bg-white rounded-[40px_0px_0px_40px] text-stone-400 max-md:px-5 max-md:pb-24 max-md:mt-10 max-md:max-w-full">
-            <h2 className="self-start mt-12 mb-8 text-3xl font-extrabold text-foreground tracking-[3.2px] max-md:mt-10">
-              Log In
-            </h2>
-            <form
-              onSubmit={handleSubmit}
-              className="flex flex-col text-base font-medium rounded-none max-w-[561px] text-stone-400"
-              noValidate
+    <main className="bg-pink-50 min-h-screen flex items-center justify-center">
+      {/* Popup Message */}
+      {popupMessage && (
+        <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
+          <div className="bg-white rounded-xl shadow-lg p-6 text-center w-[90%] max-w-md">
+            <p className="text-green-800 text-lg font-semibold">{popupMessage}</p>
+            <button
+              onClick={closePopup}
+              className="mt-4 px-6 py-2 bg-green-700 text-white font-semibold rounded-lg hover:bg-green-800 transition-colors focus:outline-none"
             >
-              <div className="mt-14 max-md:mt-10">
-                <InputField
-                  id="email"
-                  label="Email Address"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange("email")}
-                  required
-                  ariaLabel="Enter your email address"
-                />
-              </div>
-
-              <div className="mt-16 max-md:mt-10 relative">
-                <InputField
-                  id="password"
-                  label="Password"
-                  type="password"
-                  value={formData.password}
-                  onChange={handleInputChange("password")}
-                  required
-                  ariaLabel="Enter your password"
-                />
-                <img
-                  loading="lazy"
-                  src="https://cdn.builder.io/api/v1/image/assets/TEMP/010b4eadd99f66bd19937c8dbb807b2ebe998544e46d5d596a90a486d60bcaa3?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
-                  alt=""
-                  className="absolute right-2 bottom-5 object-contain aspect-[1.1] w-[22px]"
-                  aria-hidden="true"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="overflow-hidden self-center px-16 pt-2 pb-5 mt-16 w-full text-xl font-semibold rounded-xl bg-stone-500 max-w-[405px] text-orange-950 hover:bg-stone-600 transition-colors focus:outline-none focus:ring-2 focus:ring-stone-400 disabled:opacity-50 disabled:cursor-not-allowed max-md:px-5 max-md:mt-10"
-                aria-label="sign in"
-              >
-                Sign In
-              </button>
-            </form>
+              OK
+            </button>
           </div>
-        </section>
+        </div>
+      )}
+
+      {/* Login Form */}
+      <div className="flex flex-col w-[60%] mx-auto max-md:w-full">
+        <div className="flex overflow-hidden flex-col items-center px-10 py-10 w-full text-base font-medium bg-white rounded-xl text-stone-400 shadow-lg max-md:px-5 max-md:py-8 max-md:max-w-full">
+          <h2 className="self-center mb-6 text-3xl font-extrabold text-pink-700 tracking-[3.2px]">
+            Log In
+          </h2>
+          <form
+            onSubmit={handleSubmit}
+            className="flex flex-col text-base font-medium w-full max-w-[400px] text-stone-400"
+            noValidate
+          >
+            <div className="mb-6">
+              <InputField
+                id="email"
+                label="Email Address"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange("email")}
+                required
+                ariaLabel="Enter your email address"
+              />
+            </div>
+
+            <div className="mb-8 relative">
+              <InputField
+                id="password"
+                label="Password"
+                type="password"
+                value={formData.password}
+                onChange={handleInputChange("password")}
+                required
+                ariaLabel="Enter your password"
+              />
+              <img
+                loading="lazy"
+                src="https://cdn.builder.io/api/v1/image/assets/TEMP/010b4eadd99f66bd19937c8dbb807b2ebe998544e46d5d596a90a486d60bcaa3?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
+                alt=""
+                className="absolute right-2 bottom-5 object-contain aspect-[1.1] w-[22px]"
+                aria-hidden="true"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="overflow-hidden self-center px-16 py-3 w-full text-xl font-semibold rounded-xl bg-green-700 max-w-[300px] text-white hover:bg-green-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-600"
+              aria-label="sign in"
+            >
+              Sign In
+            </button>
+          </form>
+        </div>
       </div>
     </main>
   );

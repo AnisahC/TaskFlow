@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
         const tasksCollection = database.collection('task');
 
         const result = await tasksCollection.insertOne(newTask);
-        return NextResponse.json({message: "Task added"}, { status: 201 });
+        return NextResponse.json({ id: result.insertedId, ...newTask }, { status: 201 });
     } catch (error) {
         console.error('Error inserting task:', error);
         return NextResponse.json({ message: 'Error inserting task' }, { status: 500 });
@@ -41,7 +41,7 @@ export async function GET(req: NextRequest) {
         // Find tasks with the optional query
         const tasks = await tasksCollection.find(query).toArray();
 
-        return NextResponse.json({message: "Task fetched"}, { status: 200 });
+        return NextResponse.json(tasks, { status: 200 });
     } catch (error) {
         console.error('Error fetching tasks:', error);
         return NextResponse.json({ message: 'Error fetching tasks' }, { status: 500 });
