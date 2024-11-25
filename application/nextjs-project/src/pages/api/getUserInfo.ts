@@ -1,3 +1,4 @@
+
 import { NextApiRequest, NextApiResponse } from "next";
 import { MongoClient } from "mongodb";
 import jwt from "jsonwebtoken";
@@ -31,7 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const user = await usersCollection.findOne(
       { email },
-      { projection: { myPoints: 1 } }
+      { projection: { fullName: 1, email: 1, _id: 1 } }
     );
 
     if (!user) {
@@ -40,9 +41,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return;
     }
 
-    res.status(200).json({ myPoints: user.myPoints || 0 });
+    res.status(200).json({ 
+      userName: user.fullName, 
+      Address: user.email, 
+      UserId: user._id.toString() 
+    });
   } catch (error) {
-    console.error("Error fetching user points:", error);
+    console.error("Error fetching user info:", error);
     res.status(500).json({ message: "Internal server error" });
   } finally {
     await client.close();

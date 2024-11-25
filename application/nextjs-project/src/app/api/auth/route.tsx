@@ -16,8 +16,8 @@ export async function GET(req: NextRequest) {
   }
   try {
     console.log("Verifying token");
-    jwt.verify(token, JWT_SECRET);
-    return NextResponse.json({ authenticated: true }, { status: 200 });
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string; email: string };
+    return NextResponse.json({ authenticated: true, userId: decoded.userId, email: decoded.email }, { status: 200 });
   } catch (error) {
     console.error("Invalid token", error);
     return NextResponse.json(

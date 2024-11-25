@@ -1,29 +1,55 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import WelcomeCard from "@/components/WelcomeDashboard";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import PointsCard from "@/components/PointsCard";
 
-const userName = "User";
-const showId = "123456789";
-const userId = "67380aa82f7c752dc3392ecf";
-const account = "qdnqlkj@gmail.com";
+interface User {
+  userName: string;
+  Address: string;
+  UserId: string;
+}
 
 const OverviewPage: React.FC = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    // verify user status
+    // verify user status and fetch user data
     const checkAuth = async () => {
       try {
-        const response = await fetch("/api/auth", {
+        const authResponse = await fetch("/api/auth", {
           method: "GET",
           credentials: "include",
         });
-        if (response.status === 200) {
-          setIsAuthenticated(true);
+
+        if (authResponse.status === 200) {
+          const userInfoResponse = await fetch("/api/getUserInfo", {
+            method: "GET",
+            credentials: "include",
+          });
+
+          const userPointsResponse = await fetch("/api/getUsersPoints", {
+            method: "GET",
+            credentials: "include",
+          });
+
+          if (userInfoResponse.ok && userPointsResponse.ok) {
+            const userInfoData = await userInfoResponse.json();
+            const userPointsData = await userPointsResponse.json();
+
+            setUser({
+              userName: userInfoData.userName,
+              Address: userInfoData.Address,
+              UserId: userInfoData.UserId,
+            });
+            setIsAuthenticated(true);
+          } else {
+            setIsAuthenticated(false);
+            router.push("/CreateAccount");
+          }
         } else {
           setIsAuthenticated(false);
           router.push("/CreateAccount");
@@ -43,16 +69,17 @@ const OverviewPage: React.FC = () => {
   if (loading) {
     return <div>Loading...</div>;
   }
-  return isAuthenticated ? (
+
+  return isAuthenticated && user ? (
     <div className="p-6 bg-green-50 rounded-lg shadow-md">
       <h1 className="pt-0 text-4xl font-bold leading-tight text-black-900 mb-6">
-        Welcome, {userName}!
+        Welcome, {user.userName}!
       </h1>
       <div className="flex gap-10 items-start leading-tight">
         <section className="flex flex-col whitespace-nowrap">
           <h2 className="text-xs text-blue-700">USER ID</h2>
           <div className="flex gap-1 items-center mt-1 text-base font-medium text-blue-900">
-            {showId}
+            {user.UserId}
             <img
               loading="lazy"
               src="https://example.com/user_icon.png"
@@ -64,11 +91,12 @@ const OverviewPage: React.FC = () => {
         <section className="flex flex-col whitespace-nowrap">
           <h2 className="text-xs text-blue-700">Account</h2>
           <div className="flex gap-1 items-center mt-1 text-base font-medium text-blue-900">
-            {account}
+            {user.Address}
           </div>
         </section>
       </div>
       <div className="mt-10">
+        {/* <PointsCard /> */}
         <WelcomeCard />
       </div>
     </div>

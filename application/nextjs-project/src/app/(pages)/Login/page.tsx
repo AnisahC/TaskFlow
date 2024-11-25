@@ -55,10 +55,11 @@ const SignInForm: React.FC = () => {
         const data = await response.json();
         console.log("Login successful:", data);
         setPopupMessage("Login successful");
-        // // Redirect or handle login success
-        // router.push("/MyCenter");
+        // Redirect or handle login success
+        router.push("/MyCenter");
       } else {
         const errorData = await response.json();
+        console.log("Login failed:", errorData);
         setPopupMessage(errorData.message || "Login failed");
       }
     } catch (error) {
