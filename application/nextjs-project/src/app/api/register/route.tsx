@@ -9,10 +9,10 @@ const JWT_SECRET = process.env.JWT_SECRET || "I_am_a_SECRET";
 
 export async function POST(req: NextRequest) {
   try {
-    const { name, email, password } = await req.json();
+    const { fullName, email, password } = await req.json();
     console.log("Received registration request for email:", email);
 
-    if (!name || !email || !password) {
+    if (!fullName || !email || !password) {
       console.log("Name, email, or password missing");
       return NextResponse.json(
         { message: "Name, email, and password are required" },
@@ -37,10 +37,10 @@ export async function POST(req: NextRequest) {
     console.log("Hashed password for email", email, ":", hashedPassword);
 
     const newUser = {
-      name,
+      fullName: fullName,
       email,
       password: hashedPassword,
-      // ...other fields...
+      myPoints: 0,
     };
 
     await usersCollection.insertOne(newUser);
