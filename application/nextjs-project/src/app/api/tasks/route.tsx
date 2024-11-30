@@ -10,14 +10,46 @@ const JWT_SECRET = process.env.JWT_SECRET || 'I_am_a_SECRET';
 
 //inserts task into database
 export async function POST(req: NextRequest) {
-    const { title, startDate, endDate, priority, category, description } = await req.json();
-    const newTask = { title, startDate, endDate, priority, category, description, isCompleted: false };
+    // Get JWT token from cookies
+    const token = req.cookies.get('token')?.value;
+
+    if (!token) {
+        return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+    }
 
     try {
+        // Verify token and extract user email
+        const decodedToken = jwt.verify(token, JWT_SECRET) as { email: string };
+        const userEmail = decodedToken.email;
+
+        // Parse request body
+        const { title, startDate, endDate, priority, category, description } = await req.json();
+
         await client.connect();
         const database = client.db('task_management');
+        const usersCollection = database.collection('users');
+
+        // Find user by email to get user ID
+        const user = await usersCollection.findOne({ email: userEmail });
+        if (!user) {
+            return NextResponse.json({ message: "User not found" }, { status: 404 });
+        }
+
+        // Build new task with loggedInUser field
+        const newTask = {
+            title,
+            startDate,
+            endDate,
+            priority,
+            category,
+            description,
+            isCompleted: false,
+            loggedInUser: user._id
+        };
+
         const tasksCollection = database.collection('task');
 
+        // Insert new task
         const result = await tasksCollection.insertOne(newTask);
         return NextResponse.json({ id: result.insertedId, ...newTask }, { status: 201, headers: { 'Cache-Control': 'no-store' } });
     } catch (error) {
@@ -30,18 +62,37 @@ export async function POST(req: NextRequest) {
 
 //for retrieving tasks, whether by search or clicking on task directly
 export async function GET(req: NextRequest) {
-    const { title, category } = Object.fromEntries(req.nextUrl.searchParams.entries());
-    const query: any = {};
+    // Get JWT token from cookies
+    const token = req.cookies.get('token')?.value;
 
-    if (title) query.title = { $regex: new RegExp(title, 'i') };
-    if (category) query.category = { $regex: new RegExp(category, 'i') };
+    if (!token) {
+        return NextResponse.json({ message: "Not authenticated" }, { status: 401 });
+    }
 
     try {
+        // Verify token and extract user email
+        const decodedToken = jwt.verify(token, JWT_SECRET) as { email: string };
+        const userEmail = decodedToken.email;
+
         await client.connect();
         const database = client.db('task_management');
         const tasksCollection = database.collection('task');
-        
-        // Find tasks with the optional query
+        const usersCollection = database.collection('users');
+
+        // Find user by email to get user ID
+        const user = await usersCollection.findOne({ email: userEmail });
+        if (!user) {
+            return NextResponse.json({ message: "User not found" }, { status: 404 });
+        }
+
+        // Build query including loggedInUser filter
+        const { title, category } = Object.fromEntries(req.nextUrl.searchParams.entries());
+        const query: any = { loggedInUser: user._id };
+
+        if (title) query.title = { $regex: new RegExp(title, 'i') };
+        if (category) query.category = { $regex: new RegExp(category, 'i') };
+
+        // Find tasks that belong to the logged-in user
         const tasks = await tasksCollection.find(query).toArray();
 
         return NextResponse.json(tasks, { status: 200, headers: { 'Cache-Control': 'no-store' } });
