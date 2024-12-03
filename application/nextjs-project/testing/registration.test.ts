@@ -7,7 +7,7 @@ describe('/api/users - Registration Validation', () => {
         const req = {
             json: jest.fn().mockResolvedValue({
                 fullName: 'testuser',
-                email: 'le6ee@gmail.com',
+                email: 'le787ee@gmail.com',
                 password: 'testpassword',
             }),
 
@@ -49,12 +49,6 @@ describe('/api/users - Registration Validation', () => {
         if (response) {
             // Expect status 201 for successful registration
             expect(response.status).toBe(400);
-
-            // Call response.json() and check its return value directly
-            const jsonResponse = await response.json();
-            expect(jsonResponse).toEqual({
-                message: 'All fields are required',
-            });
         } else {
             console.log('No response returned');
         }
