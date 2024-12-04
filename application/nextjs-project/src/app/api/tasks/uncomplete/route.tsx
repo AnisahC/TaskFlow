@@ -36,6 +36,7 @@ export async function PATCH(req: NextRequest) {
         await client.connect();
         const database = client.db('task_management');
         const tasksCollection = database.collection('task');
+        const usersCollection = database.collection('users');
 
         // Find the task by ID
         const task = await tasksCollection.findOne({ _id: new ObjectId(id) });
@@ -59,6 +60,21 @@ export async function PATCH(req: NextRequest) {
         if (result.modifiedCount === 0) {
             return NextResponse.json({ message: "Failed to uncomplete task" }, { status: 500 });
         }
+
+        const priority = task.priority as keyof typeof pointsMap;
+        const pointsToSubtract = pointsMap[priority];
+
+        // Update the user's points
+        const updateUserResult = await usersCollection.updateOne(
+            { _id: new ObjectId(userId) },
+            { $inc: { myPoints: -pointsToSubtract } } // Subtract points
+        );
+
+        if (updateUserResult.modifiedCount === 0) {
+            return NextResponse.json({ message: 'Failed to update user points' }, { status: 500 });
+        }
+
+        console.log('User points updated successfully.');
 
         return NextResponse.json({ message: "Task marked as incomplete successfully" });
     } catch (error) {
