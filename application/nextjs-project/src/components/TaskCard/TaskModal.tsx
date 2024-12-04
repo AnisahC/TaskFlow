@@ -66,26 +66,26 @@ const TaskModal: React.FC<TaskModalProps> = ({
     }
   };
 
-// Function to move a completed task back to "To-Do"
-const handleUncomplete = async () => {
-  try {
-    const response = await fetch(`/api/tasks`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ id: task._id }), // Send the task ID to mark as completed
-    });
+  // Function to move a completed task back to "To-Do"
+  const handleUncomplete = async () => {
+    try {
+      const response = await fetch(`/api/tasks/uncomplete`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: task._id }), // Send the task ID to mark as completed
+      });
 
-    if (response.ok) {
-      handleReload();
-    } else {
-      console.error("Failed to mark task as completed");
+      if (response.ok) {
+        handleReload();
+      } else {
+        console.error("Failed to mark task as uncompleted");
+      }
+    } catch (error) {
+      console.error("Error completing task:", error);
     }
-  } catch (error) {
-    console.error("Error completing task:", error);
-  }
-};
+  };
 
 
   return (
