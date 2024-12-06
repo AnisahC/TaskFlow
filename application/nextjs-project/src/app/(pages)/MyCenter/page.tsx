@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { Task } from "@/components/TaskCard/types";
 import WelcomeCard from "@/components/WelcomeDashboard";
 import { useRouter } from "next/navigation";
-import PointsCard from "@/components/PointsCard";
-
+import { DashBoardCard } from "@/components/DashBoardCard";
 interface User {
   userName: string;
   Address: string;
@@ -15,7 +15,13 @@ const OverviewPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const legendItems = [
+    { color: "bg-red-500", label: "High" },
+    { color: "bg-yellow-500", label: "Medium" },
+    { color: "bg-green-500", label: "Low" },
+  ];
   useEffect(() => {
     // verify user status and fetch user data
     const checkAuth = async () => {
@@ -63,6 +69,20 @@ const OverviewPage: React.FC = () => {
       }
     };
 
+    const fetchTasks = async () => {
+      try {
+        const response = await fetch("../api/tasks");
+        if (!response.ok) {
+          throw new Error("Failed to fetch tasks");
+        }
+        const data = await response.json();
+        setTasks(data);
+      } catch (err) {
+        setError((err as Error).message);
+      }
+    };
+
+    fetchTasks();
     checkAuth();
   }, [router]);
 
@@ -96,8 +116,19 @@ const OverviewPage: React.FC = () => {
         </section>
       </div>
       <div className="mt-10">
-        {/* <PointsCard /> */}
-        <WelcomeCard />
+        {!tasks ? (
+          <WelcomeCard />
+        ) : (
+          <DashBoardCard
+            title="CHART TITLE"
+            value="5.000,00"
+            subtitle="50 Orders"
+            tasks={tasks}
+            legendItems={legendItems}
+            chartImageSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/f341deacca44efbaf7ee4bc6868e08d35c29fd59bc40fbb233d07135deb07778?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
+            periodIconSrc="https://cdn.builder.io/api/v1/image/assets/TEMP/244466fca9aa2befb8413d03cf438e99139a4e06a5002ddffbe6e5fc9bd9bde9?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
+          />
+        )}
       </div>
     </div>
   ) : null;

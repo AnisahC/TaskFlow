@@ -1,3 +1,16 @@
+export type TaskStatus = "todo" | "inProgress" | "completed";
+
+export interface Task {
+  _id: string;
+  title: string;
+  startDate: string;
+  endDate: string;
+  priority: string;
+  category: string;
+  description: string;
+  isCompleted: boolean;
+}
+
 export interface CalendarEvent {
   id: string;
   date: string;
@@ -53,4 +66,19 @@ export interface InputFieldProps {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   ariaLabel: string;
+}
+
+export interface LegendItemProps {
+  color: string;
+  label: string;
+}
+
+export interface ChartCardProps {
+  title: string;
+  value: string;
+  subtitle: string;
+  tasks: Task[];
+  legendItems: LegendItemProps[];
+  chartImageSrc: string;
+  periodIconSrc: string;
 }
