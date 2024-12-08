@@ -1,91 +1,96 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const MyColorThemePage: React.FC = () => {
-  // State to store the selected colors
-  const [primaryColor, setPrimaryColor] = useState("#ff9999"); // Darker pink
-  const [secondaryColor, setSecondaryColor] = useState("#ccffcc"); // Light green
-  const [accentColor, setAccentColor] = useState("#ff99cc"); // Pink
+  const [primaryColor, setPrimaryColor] = useState("#ff9999");
+  const [secondaryColor, setSecondaryColor] = useState("#ccffcc");
+  const [accentColor, setAccentColor] = useState("#ff99cc");
+
+  // Load saved theme from localStorage
+  useEffect(() => {
+    const savedPrimary = localStorage.getItem("primaryColor");
+    const savedSecondary = localStorage.getItem("secondaryColor");
+    const savedAccent = localStorage.getItem("accentColor");
+
+    if (savedPrimary) setPrimaryColor(savedPrimary);
+    if (savedSecondary) setSecondaryColor(savedSecondary);
+    if (savedAccent) setAccentColor(savedAccent);
+
+    applyTheme(savedPrimary || primaryColor, savedSecondary || secondaryColor, savedAccent || accentColor);
+  }, []);
+
+  // Update the theme globally
+  const applyTheme = (primary: string, secondary: string, accent: string) => {
+    document.documentElement.style.setProperty("--primary-color", primary);
+    document.documentElement.style.setProperty("--secondary-color", secondary);
+    document.documentElement.style.setProperty("--accent-color", accent);
+  };
+
+  const handleSaveTheme = () => {
+    localStorage.setItem("primaryColor", primaryColor);
+    localStorage.setItem("secondaryColor", secondaryColor);
+    localStorage.setItem("accentColor", accentColor);
+
+    applyTheme(primaryColor, secondaryColor, accentColor);
+    alert("Theme saved successfully!");
+  };
 
   return (
-    <div className="p-8 bg-pink-50 rounded-xl shadow-lg">
-      <h1 className="text-3xl font-bold text-green-700 mb-6">
+    <div className="p-8 bg-pink-50 rounded-xl shadow-lg min-h-screen">
+      <h1
+        className="text-3xl font-bold mb-6"
+        style={{ color: "var(--primary-color)" }}
+      >
         Customize Your Color Theme
       </h1>
-      <p className="text-green-600 mb-4">
-        Choose your color preferences to personalize the interface:
-      </p>
-
       <div className="space-y-6">
-        {/* Primary Color Section */}
-        <div
-          className="p-4 bg-white rounded-md shadow-sm border-2"
-          style={{ borderColor: primaryColor }}
-        >
-          <h2
-            className="text-lg font-semibold"
-            style={{ color: primaryColor }}
-          >
-            Primary Color
-          </h2>
-          <p className="text-sm text-green-600">
-            Select the main color that will be used throughout the interface.
-          </p>
+        {/* Primary Color */}
+        <div>
+          <label className="block font-medium mb-2" style={{ color: "var(--primary-color)" }}>
+            Primary Color:
+          </label>
           <input
             type="color"
-            className="mt-3 cursor-pointer"
             value={primaryColor}
             onChange={(e) => setPrimaryColor(e.target.value)}
-            aria-label="Select primary color"
+            className="cursor-pointer"
           />
         </div>
 
-        {/* Secondary Color Section */}
-        <div
-          className="p-4 bg-white rounded-md shadow-sm border-2"
-          style={{ borderColor: secondaryColor }}
-        >
-          <h2
-            className="text-lg font-semibold"
-            style={{ color: secondaryColor }}
-          >
-            Secondary Color
-          </h2>
-          <p className="text-sm text-green-600">
-            Choose a complementary color to enhance contrast and style.
-          </p>
+        {/* Secondary Color */}
+        <div>
+          <label className="block font-medium mb-2" style={{ color: "var(--secondary-color)" }}>
+            Secondary Color:
+          </label>
           <input
             type="color"
-            className="mt-3 cursor-pointer"
             value={secondaryColor}
             onChange={(e) => setSecondaryColor(e.target.value)}
-            aria-label="Select secondary color"
+            className="cursor-pointer"
           />
         </div>
 
-        {/* Accent Color Section */}
-        <div
-          className="p-4 bg-white rounded-md shadow-sm border-2"
-          style={{ borderColor: accentColor }}
-        >
-          <h2
-            className="text-lg font-semibold"
-            style={{ color: accentColor }}
-          >
-            Accent Color
-          </h2>
-          <p className="text-sm text-green-600">
-            Add an accent color to highlight important elements.
-          </p>
+        {/* Accent Color */}
+        <div>
+          <label className="block font-medium mb-2" style={{ color: "var(--accent-color)" }}>
+            Accent Color:
+          </label>
           <input
             type="color"
-            className="mt-3 cursor-pointer"
             value={accentColor}
             onChange={(e) => setAccentColor(e.target.value)}
-            aria-label="Select accent color"
+            className="cursor-pointer"
           />
         </div>
+
+        {/* Save Button */}
+        <button
+          onClick={handleSaveTheme}
+          className="mt-6 px-6 py-2 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition duration-200"
+        >
+          Save Theme
+        </button>
       </div>
     </div>
   );

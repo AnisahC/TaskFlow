@@ -1,23 +1,8 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 
-interface RecentTaskProps {
-  name: string;
-  daysAgo: number;
-}
-
-const RecentTask: React.FC<RecentTaskProps> = ({ name, daysAgo }) => (
-  <div className="flex flex-col justify-center py-3 pr-4 pl-10 w-full max-md:pl-5">
-    <div className="text-sm text-pink-700">{name}</div>
-    <div className="mt-2 text-xs text-green-700 text-opacity-80">
-      {daysAgo} Days ago
-    </div>
-  </div>
-);
-
 const RecentlyFinishedCard: React.FC = () => {
   const router = useRouter();
-  const recentTasks = [{ name: "take mom to airport", daysAgo: 8 }];
 
   const handleMenuItemClick = (path: string) => {
     router.push(path);
@@ -44,10 +29,9 @@ const RecentlyFinishedCard: React.FC = () => {
           />
         </div>
       </div>
-      <div className="flex flex-col mt-1 w-full">
-        {recentTasks.map((task, index) => (
-          <RecentTask key={index} name={task.name} daysAgo={task.daysAgo} />
-        ))}
+      {/* Placeholder text */}
+      <div className="flex flex-col items-center justify-center mt-4 text-sm text-pink-700">
+        <p>Click "View more" to see your task list.</p>
       </div>
     </div>
   );

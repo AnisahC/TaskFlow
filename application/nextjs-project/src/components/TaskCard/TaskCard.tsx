@@ -37,19 +37,23 @@ export function TaskCard({
   return (
     <article
       onClick={onClick}
-      className={`flex flex-col items-start p-4 mt-3 w-full bg-white border-l-4 rounded-lg shadow-lg ${borderColor}`}
+      className={`flex flex-col items-start p-4 mt-3 w-full bg-pink-50 border-l-4 rounded-lg shadow-md ${borderColor}`}
     >
+      {/* Priority Tags */}
       <div className="flex gap-1.5 items-start">
         {priorities.map((p, index) => (
           <PriorityTag key={index} priority={p} />
         ))}
       </div>
-      <h2 className="text-lg my-2">{title}</h2>
 
+      {/* Title */}
+      <h2 className="text-lg my-2 text-green-700 font-semibold">{title}</h2>
+
+      {/* Date and Category */}
       <div className="flex flex-row items-end space-x-4 my-1 w-full">
         <DateDisplay date={date} time={time} />
         <div className="flex-grow"></div>
-        <h3 className="text-gray-500 my-auto">{category}</h3>
+        <h3 className="text-green-600 text-sm font-medium">{category}</h3>
       </div>
     </article>
   );

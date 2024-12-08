@@ -22,8 +22,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   const baseClasses =
     "flex gap-3 items-center px-5 py-3.5 w-full rounded-3xl min-h-[48px]";
   const activeClasses = isActive
-    ? "bg-pink-100 text-green-700 font-semibold"
-    : "text-pink-700 hover:bg-pink-50 hover:text-green-600";
+    ? "bg-pink-50 text-green-700"
+    : "text-stone-900 hover:text-pink-700";
 
   return (
     <Link href={to} passHref>
@@ -62,27 +62,35 @@ const Sidebar: React.FC = () => {
 
   return (
     <nav className="flex flex-col w-[19%] max-md:ml-0 max-md:w-full">
-      <div className="flex flex-col grow pb-96 w-full text-base font-medium leading-tight shadow-sm bg-pink-50 min-h-[922px] max-md:pb-24 rounded-lg">
+      <div className="flex flex-col grow pb-96 w-full text-base font-medium leading-tight shadow-sm bg-pink-50 min-h-[922px] max-md:pb-24">
         <MenuItem
-          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/2245afc7abcdfb022e33ee91eb9d9b353cee40d5981849070729b95b47ac801d?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
+          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/2245afc7abcdfb022e33ee91eb9d9b353cee40d5981849070729b95b47ac801d"
           label="Overview"
           to="/MyCenter"
           isActive={activeItem === "/MyCenter"}
           onClick={() => handleMenuItemClick("/MyCenter")}
         />
         <MenuItem
-          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/95c6970b609598c2e23104d55fa6004300948c1597ac8b8e0a66f2280f698042?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
+          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/95c6970b609598c2e23104d55fa6004300948c1597ac8b8e0a66f2280f698042"
           label="Add Task"
           to="/MyCenter/addTask"
           isActive={activeItem === "/MyCenter/addTask"}
           onClick={() => handleMenuItemClick("/MyCenter/addTask")}
         />
         <MenuItem
-          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/95c6970b609598c2e23104d55fa6004300948c1597ac8b8e0a66f2280f698042?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
+          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/95c6970b609598c2e23104d55fa6004300948c1597ac8b8e0a66f2280f698042"
           label="My Colour Theme"
           to="/MyCenter/my-colour-theme"
           isActive={activeItem === "/MyCenter/my-colour-theme"}
           onClick={() => handleMenuItemClick("/MyCenter/my-colour-theme")}
+        />
+        {/* About Us Section */}
+        <MenuItem
+          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/about-icon-placeholder"
+          label="About Us"
+          to="/About"
+          isActive={activeItem === "/About"}
+          onClick={() => handleMenuItemClick("/About")}
         />
       </div>
     </nav>

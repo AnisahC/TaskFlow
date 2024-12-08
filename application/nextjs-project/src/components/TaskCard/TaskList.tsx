@@ -29,9 +29,15 @@ export function TaskList({ title, items, status }: TaskListProps) {
     console.log("Completing task:", selectedTask);
     setSelectedTask(null);
   };
+
   return (
-    <section className="flex flex-col flex-1 shrink px-4 pt-4 pb-6 rounded basis-0 min-w-[240px] max-md:max-w-full">
-      <h2 className="text-lg leading-10 text-gray-500">{title}</h2>
+    <section className="flex flex-col flex-1 shrink px-4 pt-4 pb-6 rounded-lg border border-green-300 bg-pink-50 shadow-md basis-0 min-w-[240px] max-md:max-w-full">
+      {/* Title Styling */}
+      <h2 className="text-lg leading-10 text-green-700 font-bold border-b-2 border-pink-300 pb-1 mb-4">
+        {title}
+      </h2>
+
+      {/* Task Card List */}
       {items.map((item, index) => (
         <TaskCard
           key={index}
@@ -44,6 +50,8 @@ export function TaskList({ title, items, status }: TaskListProps) {
           onClick={() => handleCardClick(item)}
         />
       ))}
+
+      {/* Modal for Task Actions */}
       {selectedTask &&
         (selectedTask.isCompleted ? (
           <TaskModal

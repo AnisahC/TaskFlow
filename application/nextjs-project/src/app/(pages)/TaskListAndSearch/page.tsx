@@ -8,20 +8,12 @@ import { BackButton } from "@/components/BackButton";
 const alltask = {
   todo: {
     title: (
-      <span className="text-yellow-700 border-b-4 border-yellow-500 pb-1">
+      <span className="text-pink-700 border-b-4 border-pink-500 pb-1">
         TO DO
       </span>
     ),
     items: [] as Task[],
   },
-  // inProgress: {
-  //   title: (
-  //     <span className="text-blue-700 border-b-4 border-blue-500 pb-1">
-  //       IN PROGRESS
-  //     </span>
-  //   ),
-  //   items: [] as Task[],
-  // },
   completed: {
     title: (
       <span className="text-green-700 border-b-4 border-green-500 pb-1">
@@ -35,7 +27,7 @@ const alltask = {
 const TaskBoard: React.FC = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
-  const [searchResults, setSearchResults] = useState<any[]>([]); // Ensure it's always an array
+  const [searchResults, setSearchResults] = useState<any[]>([]);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -72,21 +64,19 @@ const TaskBoard: React.FC = () => {
         console.log(data); // Check the data from the API
         if (Array.isArray(data)) {
           setSearchResults(data);
-          // Update tasks array to reflect search results
           alltask.todo.items = data.filter((task: Task) => !task.isCompleted);
-          console.log(alltask.todo.items);
           alltask.completed.items = data.filter(
             (task: Task) => task.isCompleted
           );
         } else {
-          setSearchResults([]); // Fallback to empty array if not
+          setSearchResults([]);
         }
       })
       .catch((error) => console.error("Error searching tasks:", error));
   };
 
   if (error) {
-    return <div>Error: {error}</div>;
+    return <div className="text-red-500">Error: {error}</div>;
   }
 
   return (
@@ -102,11 +92,11 @@ const TaskBoard: React.FC = () => {
           placeholder="Title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          className="px-4 py-2 border border-green-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-transparent"
         />
         <button
           onClick={handleSearch}
-          className="px-4 py-2 bg-blue-500 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-75"
+          className="px-4 py-2 bg-green-600 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-75 transition duration-200"
         >
           Search
         </button>
@@ -127,4 +117,5 @@ const TaskBoard: React.FC = () => {
     </div>
   );
 };
+
 export default TaskBoard;
