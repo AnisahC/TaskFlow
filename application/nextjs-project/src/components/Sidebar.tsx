@@ -84,14 +84,7 @@ const Sidebar: React.FC = () => {
           isActive={activeItem === "/MyCenter/my-colour-theme"}
           onClick={() => handleMenuItemClick("/MyCenter/my-colour-theme")}
         />
-        {/* About Us Section */}
-        <MenuItem
-          icon="https://cdn.builder.io/api/v1/image/assets/TEMP/about-icon-placeholder"
-          label="About Us"
-          to="/About"
-          isActive={activeItem === "/About"}
-          onClick={() => handleMenuItemClick("/About")}
-        />
+  
       </div>
     </nav>
   );

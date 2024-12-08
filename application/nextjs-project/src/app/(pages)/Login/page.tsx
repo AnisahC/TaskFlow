@@ -7,6 +7,7 @@ import Logout from "@/components/Logout";
 
 const SignInForm: React.FC = () => {
   const router = useRouter();
+  // verify user status
   const [authenticated, setAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState<LoginFormData>({
@@ -24,6 +25,7 @@ const SignInForm: React.FC = () => {
         });
         if (response.status === 200) {
           setAuthenticated(true);
+          setPopupMessage("Login successful");
         } else {
           setAuthenticated(false);
         }
@@ -43,15 +45,20 @@ const SignInForm: React.FC = () => {
     try {
       const response = await fetch("/api/login", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify(formData),
       });
 
       if (response.ok) {
+        const data = await response.json();
+        console.log("Login successful:", data);
         setPopupMessage("Login successful");
         router.push("/MyCenter");
       } else {
         const errorData = await response.json();
+        console.log("Login failed:", errorData);
         setPopupMessage(errorData.message || "Login failed");
       }
     } catch (error) {
@@ -67,17 +74,25 @@ const SignInForm: React.FC = () => {
     };
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen text-4xl">Loading...</div>;
+    return (
+      <div className="flex items-center justify-center min-h-screen text-4xl">
+        Loading...
+      </div>
+    );
   }
 
   if (authenticated) {
     return <Logout />;
   }
 
-  const closePopup = () => setPopupMessage(null);
+  const closePopup = () => {
+    setPopupMessage(null);
+    router.push("/MyCenter");
+  };
 
   return (
     <main className="bg-pink-50 min-h-screen flex items-center justify-center">
+      {/* Popup Message */}
       {popupMessage && (
         <div className="absolute flex items-center justify-center top-0 left-0 w-full h-full bg-black bg-opacity-50 z-50">
           <div className="bg-white rounded-xl shadow-lg p-6 text-center w-[90%] max-w-md">
@@ -93,6 +108,8 @@ const SignInForm: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Login Form */}
       <div className="flex flex-col w-[60%] mx-auto max-md:w-full">
         <div className="flex overflow-hidden flex-col items-center px-10 py-10 w-full text-base font-medium bg-white rounded-xl text-stone-400 shadow-lg max-md:px-5 max-md:py-8 max-md:max-w-full">
           <h2 className="self-center mb-6 text-3xl font-extrabold text-pink-700 tracking-[3.2px]">
@@ -103,24 +120,30 @@ const SignInForm: React.FC = () => {
             className="flex flex-col text-base font-medium w-full max-w-[400px] text-stone-400"
             noValidate
           >
-            <InputField
-              id="email"
-              label="Email Address"
-              type="email"
-              value={formData.email}
-              onChange={handleInputChange("email")}
-              required
-              ariaLabel="Enter your email address"
-            />
-            <InputField
-              id="password"
-              label="Password"
-              type="password"
-              value={formData.password}
-              onChange={handleInputChange("password")}
-              required
-              ariaLabel="Enter your password"
-            />
+            <div className="mb-6">
+              <InputField
+                id="email"
+                label="Email Address"
+                type="email"
+                value={formData.email}
+                onChange={handleInputChange("email")}
+                required
+                ariaLabel="Enter your email address"
+              />
+            </div>
+
+            <div className="mb-8 relative">
+              <InputField
+                id="password"
+                label="Password"
+                type="password"
+                value={formData.password}
+                onChange={handleInputChange("password")}
+                required
+                ariaLabel="Enter your password"
+              />
+            </div>
+
             <button
               type="submit"
               className="overflow-hidden self-center px-16 py-3 w-full text-xl font-semibold rounded-xl bg-green-700 max-w-[300px] text-white hover:bg-green-800 transition-colors focus:outline-none focus:ring-2 focus:ring-green-600"
@@ -129,6 +152,18 @@ const SignInForm: React.FC = () => {
               Sign In
             </button>
           </form>
+
+          {/* Button to navigate to Create Account */}
+          <p className="self-center mt-6">
+            Don&apos;t have an account?{" "}
+            <a
+              href="/CreateAccount"
+              className="text-pink-600 hover:text-pink-700 focus:outline-none focus:underline"
+              aria-label="Go to Create Account page"
+            >
+              Create Account here
+            </a>
+          </p>
         </div>
       </div>
     </main>
