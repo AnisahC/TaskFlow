@@ -11,8 +11,9 @@ const RecentlyFinishedCard: React.FC = () => {
   return (
     <div className="flex flex-col py-6 mt-8 w-full leading-tight bg-pink-50 rounded-2xl border border-solid border-green-300 max-w-[408px] shadow-md">
       <div className="flex gap-10 justify-between items-center px-10 w-full min-h-[48px] max-md:px-5">
+        {/* Updated Title */}
         <h2 className="self-stretch my-auto text-xl font-bold text-green-700">
-          Recently Finished
+          View Task List
         </h2>
         <div className="flex gap-1 items-center self-stretch my-auto text-sm text-green-700 hover:text-pink-700">
           <div
