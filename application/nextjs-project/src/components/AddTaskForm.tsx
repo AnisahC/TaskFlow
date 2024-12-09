@@ -61,7 +61,7 @@ const AddTaskForm: React.FC = () => {
         <h1 className="self-start text-4xl font-bold leading-tight text-green-700">
           Add Task
         </h1>
-        <div className="flex shrink-0 mt-10 h-px bg-pink-200 max-md:mt-10 max-md:max-w-full" />
+        {/* <div className="flex shrink-0 mt-10 h-px bg-pink-200 max-md:mt-10 max-md:max-w-full" /> */}
 
         {successMessage && (
           <div className="mt-4 text-green-500 font-bold">{successMessage}</div>
@@ -71,17 +71,11 @@ const AddTaskForm: React.FC = () => {
           onSubmit={handleSubmit}
           className="flex flex-col pr-20 pl-8 mt-12 w-full max-md:px-5 max-md:mt-10 max-md:max-w-full"
         >
-          <div className="flex flex-wrap gap-3.5 text-base leading-loose text-center text-green-700 max-md:mr-1.5 max-md:max-w-full">
-            <img
-              loading="lazy"
-              src="https://cdn.builder.io/api/v1/image/assets/TEMP/0fcf485f2029ba0883430ac563b843f84a91530598e0af72044ef56348f39b02?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
-              alt=""
-              className="object-contain shrink-0 self-start aspect-square w-[43px]"
-            />
+          <div className="flex flex-wrap gap-2 text-md leading-loose text-center text-green-700 max-md:mr-1.5 w-1/2 max-md:max-w-full">
             <input
               type="text"
               placeholder="Task name"
-              className="grow px-3 pt-px pb-11 bg-pink-50 rounded-xl border-solid border-[1.304px] border-green-300 w-fit max-md:px-5 max-md:max-w-full"
+              className="grow px-2 py-1 bg-pink-50 rounded-lg border border-green-300 w-24 max-md:w-full"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               aria-label="Task name"
@@ -122,12 +116,6 @@ const AddTaskForm: React.FC = () => {
                     <option value="Medium">Medium</option>
                     <option value="Low">Low</option>
                   </select>
-                  <label
-                    htmlFor="description"
-                    className="mt-5 text-xl leading-loose text-center text-green-700"
-                  >
-                    Descriptions
-                  </label>
                 </div>
               </div>
               <div className="flex flex-col ml-5 w-6/12 max-md:ml-0 max-md:w-full">
@@ -168,6 +156,12 @@ const AddTaskForm: React.FC = () => {
               </div>
             </div>
           </div>
+          <label
+            htmlFor="description"
+            className="mt-5 ml-3 text-xl leading-loose text-start text-green-700"
+          >
+            Descriptions
+          </label>
           <textarea
             id="description"
             placeholder="Write something..."

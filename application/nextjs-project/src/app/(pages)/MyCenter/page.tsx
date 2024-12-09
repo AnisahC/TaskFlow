@@ -91,29 +91,15 @@ const OverviewPage: React.FC = () => {
   }
 
   return isAuthenticated && user ? (
-    <div className="p-6 bg-green-50 rounded-lg shadow-md">
+    <div className="p-6 bg-green-50 rounded-lg shadow-md w-full mr-20">
       <h1 className="pt-0 text-4xl font-bold leading-tight text-black-900 mb-6">
         Welcome, {user.userName}!
       </h1>
-      <div className="flex gap-10 items-start leading-tight">
-        <section className="flex flex-col whitespace-nowrap">
-          <h2 className="text-xs text-blue-700">USER ID</h2>
-          <div className="flex gap-1 items-center mt-1 text-base font-medium text-blue-900">
-            {user.UserId}
-            <img
-              loading="lazy"
-              src="https://example.com/user_icon.png"
-              alt=""
-              className="object-contain shrink-0 self-stretch my-auto w-4 aspect-[1.07]"
-            />
-          </div>
-        </section>
-        <section className="flex flex-col whitespace-nowrap">
-          <h2 className="text-xs text-blue-700">Account</h2>
-          <div className="flex gap-1 items-center mt-1 text-base font-medium text-blue-900">
-            {user.Address}
-          </div>
-        </section>
+      <div className="flex flex-col gap-2 p-2">
+        <div className="flex items-center gap-2 mt-1 text-base font-medium text-blue-900">
+          <span className="text-sm text-gray-500">Email:</span>
+          <span>{user.Address}</span>
+        </div>
       </div>
       <div className="mt-10">
         {!tasks ? (

@@ -21,7 +21,7 @@ const AddTasksLayout: React.FC<{ children: React.ReactNode }> = ({
           <Sidebar />
           <main className="flex flex-col ml-5 w-full max-md:ml-0 ">
             <div className="mt-10 max-md:mt-5 max-md:max-w-full">
-              <div className="flex flex-row max-md:flex-col">
+              <div className="flex flex-row max-md:flex-col w-full">
                 {children}
 
                 <aside className="flex flex-col w-[35%] ml-auto max-md:ml-0 max-md:w-full">
@@ -32,7 +32,6 @@ const AddTasksLayout: React.FC<{ children: React.ReactNode }> = ({
                     <RecentlyFinishedCard />
                   </div>
                 </aside>
-
               </div>
             </div>
           </main>

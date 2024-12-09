@@ -151,7 +151,7 @@ export async function PATCH(req: NextRequest) {
 
         // Calculate and add points
         const pointsMap = {
-            High: 500,
+            High: 600,
             Medium: 300,
             Low: 100,
         };
@@ -302,7 +302,7 @@ export async function PUT(req: NextRequest) {
 
         // Calculate points based on priority
         const pointsMap = {
-            High: 500,
+            High: 600,
             Medium: 300,
             Low: 100,
         };
