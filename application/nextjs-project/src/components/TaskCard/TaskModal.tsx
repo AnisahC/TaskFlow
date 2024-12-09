@@ -100,9 +100,9 @@ const TaskModal: React.FC<TaskModalProps> = ({
           {modalType === "completed" ? (
             <button
               onClick={handleUncomplete}
-              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
+              className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-700"
             >
-              UnComplete
+              Redo
             </button>
           ) : (
             <button
