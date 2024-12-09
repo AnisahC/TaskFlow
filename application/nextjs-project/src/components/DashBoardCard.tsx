@@ -115,7 +115,7 @@ export const DashBoardCard: React.FC<ChartCardProps> = ({
   };
 
   return (
-    <div className="flex relative overflow-hidden flex-col flex-1 px-6 pt-4 pb-6 w-full bg-white rounded border border-solid border-zinc-100">
+    <div className="flex relative overflow-hidden flex-col flex-1 px-6 pt-4 pb-6 w-full bg-transparent rounded border-none">
       <div className="flex pb-2 w-full font-medium text-black">
         {/* <div className="flex flex-1 shrink gap-10 justify-center self-stretch text-base bg-white basis-0 min-h-[24px]">
           <div className="whitespace-nowrap text-2xl">Statistical Table</div>
@@ -128,7 +128,7 @@ export const DashBoardCard: React.FC<ChartCardProps> = ({
       <div className="gap-2.5 self-start text-base text-gray-500">
         {filteredTasks.length} tasks in {monthNames[month]} {year}
       </div>
-      <div className="flex flex-1 gap-2.5 p-2.5 bg-white size-full">
+      <div className="flex flex-1 gap-2.5 p-2.5 bg-transparent size-full">
         {filteredTasks.length > 0 ? (
           <div className="w-1/2 h-1/2 mx-auto mb-10">
             <Pie data={chartData} />
@@ -148,7 +148,7 @@ export const DashBoardCard: React.FC<ChartCardProps> = ({
               id="month"
               value={month}
               onChange={handleMonthChange}
-              className="border border-gray-300 rounded-lg p-1 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="border border-gray-300 rounded-lg p-1 bg-transparent text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
             >
               {monthNames.map((monthName, index) => (
                 <option key={index} value={index}>
@@ -165,7 +165,7 @@ export const DashBoardCard: React.FC<ChartCardProps> = ({
               id="year"
               value={year}
               onChange={handleYearChange}
-              className="border border-gray-300 rounded-lg p-1 bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
+              className="border border-gray-300 rounded-lg p-1 bg-transparent text-gray-700 focus:outline-none focus:ring-2 focus:ring-pink-500"
             >
               {Array.from({ length: 10 }, (_, i) => year - 5 + i).map(
                 (year) => (

@@ -1,6 +1,7 @@
 "use client";
 import * as React from "react";
 import { useRouter } from "next/navigation";
+import ThemeToggle from "./themetoggle";
 
 interface NavigationBarProps {
   iconSrc: string;
@@ -20,6 +21,7 @@ export const NavigationBar: React.FC<NavigationBarProps> = ({
   return (
     <header className="flex flex-wrap items-center px-7 py-5 w-full bg-pink-100 border-b-2 border-green-400 shadow-lg max-md:px-5 max-md:max-w-full">
       <div className="flex ml-auto items-center gap-2">
+        <ThemeToggle />
         <img
           loading="lazy"
           src={notificationIconSrc}
