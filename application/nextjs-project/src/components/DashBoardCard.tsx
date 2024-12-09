@@ -107,15 +107,28 @@ export const DashBoardCard: React.FC<ChartCardProps> = ({
     datasets: [
       {
         label: "proportion",
-        data: values,
+        data: values.map((value) => value / values.reduce((a, b) => a + b, 0)),
         backgroundColor: ["#40916c", "#52b788", "#95d5b2"],
         hoverBackgroundColor: ["#ff8fab", "#ffb3c6", "#fae0e4"],
       },
     ],
   };
-
+  const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      legend: {
+        display: true,
+        position: "right" as const,
+        labels: {
+          boxWidth: 20,
+          padding: 15,
+        },
+      },
+    },
+  };
   return (
-    <div className="flex relative overflow-hidden flex-col flex-1 px-6 pt-4 pb-6 w-full bg-transparent rounded border-none">
+    <div className="flex relative overflow-hidden flex-col flex-1 px-6 pt-4 pb-6 w-full h-full bg-transparent rounded-lg border-none shadow-md">
       <div className="flex pb-2 w-full font-medium text-black">
         {/* <div className="flex flex-1 shrink gap-10 justify-center self-stretch text-base bg-white basis-0 min-h-[24px]">
           <div className="whitespace-nowrap text-2xl">Statistical Table</div>
@@ -125,16 +138,20 @@ export const DashBoardCard: React.FC<ChartCardProps> = ({
         {inprogress} <span className="text-green-600 mr-5">in progress</span>
         {completed} <span className="text-pink-400 mr-5">completed</span>
       </div>
-      <div className="gap-2.5 self-start text-base text-gray-500">
+      <div className="gap-2.5 self-start text-sm text-gray-500">
         {filteredTasks.length} tasks in {monthNames[month]} {year}
       </div>
       <div className="flex flex-1 gap-2.5 p-2.5 bg-transparent size-full">
         {filteredTasks.length > 0 ? (
-          <div className="w-1/2 h-1/2 mx-auto mb-10">
-            <Pie data={chartData} />
+          <div className="w-3/4 h-3/4 mx-auto mb-10">
+            <Pie
+              data={chartData}
+              options={chartOptions}
+              className="w-full m-5"
+            />
           </div>
         ) : (
-          <div className="flex flex-col flex-1 shrink justify-center items-center p-2.5 basis-0">
+          <div className="flex flex-col flex-1 justify-center items-center h-60 p-2.5 basis-0">
             <p>No tasks available for the selected period.</p>
           </div>
         )}
