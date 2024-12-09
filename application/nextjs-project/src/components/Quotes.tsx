@@ -37,7 +37,7 @@ const Quotes: React.FC = () => {
     <div className="flex max-w-[408px] mr-6 items-center px-10 py-6 w-full bg-green-50 rounded-2xl border border-solid border-green-300 min-h-[150px] max-md:px-5 shadow-md">
       <div className="flex flex-col w-full">
 
-        <p className="text-center text-green-700 text-sm italic">{randomQuote}</p>
+        <p className="text-center text-green-700 text-sm italic">"{randomQuote}"</p>
       </div>
     </div>
   );
