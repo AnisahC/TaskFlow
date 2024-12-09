@@ -90,7 +90,7 @@ const PointsCard: React.FC = () => {
               </li>
               <li>
                 ⭐ High Priority:{" "}
-                <span className="font-semibold">600 points</span>
+                <span className="font-semibold">500 points</span>
               </li>
             </ul>
 
@@ -109,7 +109,7 @@ const PointsCard: React.FC = () => {
                         ? "100 points"
                         : task.priority === "Medium"
                         ? "300 points"
-                        : "600 points"}
+                        : "500 points"}
                     </span>
                   </li>
                 ))}
