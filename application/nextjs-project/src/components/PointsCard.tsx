@@ -10,23 +10,22 @@ const PointsCard: React.FC = () => {
   const [points, setPoints] = useState<number>(0); // Total points
   const [completedTasks, setCompletedTasks] = useState<Task[]>([]); // Filtered completed tasks
   const [showOverview, setShowOverview] = useState<boolean>(false); // Modal toggle
+  const [showColorPicker, setShowColorPicker] = useState<boolean>(false); // Toggle color picker
+  const [boxColor, setBoxColor] = useState<string>("#fff0f6"); // Default box color
+  const [borderColor, setBorderColor] = useState<string>("#86efac"); // Default border color
 
   useEffect(() => {
     const fetchCompletedTasks = async () => {
       try {
-        // Fetch all tasks
-        const response = await fetch("/api/tasks"); // Replace with your API endpoint
+        const response = await fetch("/api/tasks");
         if (!response.ok) {
           throw new Error("Failed to fetch tasks");
         }
 
         const tasks: Task[] = await response.json();
-
-        // Filter only completed tasks
         const filteredTasks = tasks.filter((task) => task.isCompleted);
         setCompletedTasks(filteredTasks);
 
-        // Calculate total points for completed tasks
         const totalPoints = filteredTasks.reduce((sum, task) => {
           if (task.priority === "Low") return sum + 100;
           if (task.priority === "Medium") return sum + 300;
@@ -43,32 +42,66 @@ const PointsCard: React.FC = () => {
     fetchCompletedTasks();
   }, []);
 
-  const handleCardClick = () => setShowOverview(true); // Open modal
-  const handleCloseModal = () => setShowOverview(false); // Close modal
+  const handleOpenModal = () => setShowOverview(true);
+  const handleCloseModal = () => setShowOverview(false);
+  const toggleColorPicker = () => setShowColorPicker((prev) => !prev);
 
   return (
     <div>
       {/* Points Card */}
       <div
-        onClick={handleCardClick}
-        className="flex cursor-pointer max-w-[408px] mr-6 items-center px-10 py-11 w-full bg-pink-50 rounded-2xl border border-solid border-green-300 min-h-[209px] max-md:px-5 shadow-md hover:bg-pink-100 transition duration-200"
+        className="flex flex-col items-center max-w-[408px] mr-6 px-6 py-8 w-full rounded-2xl min-h-[209px] max-md:px-5 shadow-md transition duration-200"
+        style={{ backgroundColor: boxColor, borderColor: borderColor, borderWidth: "2px", borderStyle: "solid" }}
       >
-        <div className="flex flex-row my-auto w-[237px]">
-          <div className="flex flex-col w-3/4">
+        <div className="flex items-center justify-center w-full space-x-4">
+          {/* Star on the Left */}
+          <span className="text-3xl text-yellow-500">⭐</span>
+
+          {/* Points Content */}
+          <div className="flex flex-col items-center">
             <h2 className="text-xl font-bold leading-tight text-green-700">
               My Points
             </h2>
-            <p className="self-start mt-1 text-5xl text-center leading-[67px] text-pink-700 max-md:text-4xl max-md:leading-[62px]">
+            <p className="mt-1 text-5xl text-center leading-[67px] text-pink-700 max-md:text-4xl max-md:leading-[62px]">
               {points}
             </p>
+            <button
+              onClick={handleOpenModal}
+              className="mt-4 text-sm font-medium text-green-700 hover:text-pink-700 underline"
+            >
+              Click here to view point system overview
+            </button>
+            {/* Color Change Button */}
+            <button
+              onClick={toggleColorPicker}
+              className="mt-2 text-xs text-pink-700 hover:text-pink-900 underline"
+            >
+              Color Change
+            </button>
           </div>
-          <img
-            loading="lazy"
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/d9f0ca0d443ed13df5c1a41bacc079f953c5541044db3679e6d97a48ca85dfe8?placeholderIfAbsent=true&apiKey=8b37e39a71bd4bd3b190d9d326dd5d75"
-            alt="Points Icon"
-            className="object-contain my-auto w-[40px] right-6"
-          />
+
+          {/* Star on the Right */}
+          <span className="text-3xl text-yellow-500">⭐</span>
         </div>
+
+        {/* Color Picker Section */}
+        {showColorPicker && (
+          <div className="mt-4 flex flex-col items-center">
+            <label className="text-xs text-pink-700 mb-1">Box Color:</label>
+            <input
+              type="color"
+              value={boxColor}
+              onChange={(e) => setBoxColor(e.target.value)}
+              className="mb-2"
+            />
+            <label className="text-xs text-pink-700 mb-1">Border Color:</label>
+            <input
+              type="color"
+              value={borderColor}
+              onChange={(e) => setBorderColor(e.target.value)}
+            />
+          </div>
+        )}
       </div>
 
       {/* Modal for Points Overview */}
