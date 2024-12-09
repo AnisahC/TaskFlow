@@ -50,10 +50,10 @@ const MenuItem: React.FC<MenuItemProps> = ({
 const Sidebar: React.FC = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const [activeItem, setActiveItem] = useState<string>(pathname);
+  const [activeItem, setActiveItem] = useState<string>(pathname ?? "");
 
   useEffect(() => {
-    setActiveItem(pathname);
+    setActiveItem(pathname ?? "");
   }, [pathname]);
 
   const handleMenuItemClick = (path: string) => {
