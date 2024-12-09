@@ -25,13 +25,14 @@ const AddTasksLayout: React.FC<{ children: React.ReactNode }> = ({
                 {children}
 
                 <aside className="flex flex-col w-[35%] ml-auto max-md:ml-0 max-md:w-full">
-                  <div className="flex flex-col mt-44 mr-6 max-md:mt-10">
+                  <div className="flex flex-col mt-10 mr-6 max-md:mt-10">
                     <Quotes />
-                    <br></br>
+                    <br />
                     <PointsCard />
                     <RecentlyFinishedCard />
                   </div>
                 </aside>
+
               </div>
             </div>
           </main>
