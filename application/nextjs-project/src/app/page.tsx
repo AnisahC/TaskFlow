@@ -1,15 +1,52 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import fairyImage from "./fairiesdoingwork.png";
 import sparkleImage from "./sparkles.png";
 import moreSparkleImage from "./moresparkles.png";
-import type { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Home",
-};
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if user is authenticated
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await fetch("/api/auth", { credentials: "include" });
+        if (response.ok) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        console.error("Error checking authentication:", error);
+        setIsLoggedIn(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      if (response.ok) {
+        setIsLoggedIn(false);
+        router.push("/"); // Redirect to home page
+      } else {
+        console.error("Failed to log out");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <div className="relative flex items-center justify-center min-h-screen flex-col space-y-5 bg-pink-50 overflow-hidden">
       {/* TaskFlow Title */}
@@ -125,18 +162,27 @@ export default function Home() {
         className="absolute bottom-1/4 left-10 w-24 h-24 opacity-80"
       />
 
+      {/* Conditional Button */}
+      <div className="mt-8 z-10">
+        {isLoggedIn ? (
+          <button
+            onClick={handleLogout}
+            className="px-6 py-3 bg-green-700 text-white font-semibold rounded-lg shadow-md hover:bg-green-800 transition-all"
+          >
+            Click here to Log out
+          </button>
+        ) : (
+          <Link href="/CreateAccount" passHref>
+            <button className="px-6 py-3 bg-green-700 text-white font-semibold rounded-lg shadow-md hover:bg-green-800 transition-all">
+              Log In / Create Account
+            </button>
+          </Link>
+        )}
+      </div>
+
       {/* Additional Text */}
       <div className="text-center text-lg font-medium text-green-600 z-10">
         <p>Click on "About Us" above to learn more!</p>
-      </div>
-
-      {/* Create Account Button */}
-      <div className="mt-8 z-10">
-        <Link href="/CreateAccount" passHref>
-          <button className="px-6 py-3 bg-green-700 text-white font-semibold rounded-lg shadow-md hover:bg-green-800 transition-all">
-            Log In / Create Account
-          </button>
-        </Link>
       </div>
     </div>
   );
