@@ -5,6 +5,7 @@ import PointsCard from "@/components/PointsCard";
 import RecentlyFinishedCard from "@/components/RecentlyFinishedCard";
 import { NavigationBar } from "@/components/NavigationBar";
 import AddTask from "@/components/AddTaskForm";
+import Quotes from "@/components/Quotes";
 
 const AddTasksLayout: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -20,11 +21,13 @@ const AddTasksLayout: React.FC<{ children: React.ReactNode }> = ({
           <Sidebar />
           <main className="flex flex-col ml-5 w-full max-md:ml-0 ">
             <div className="mt-10 max-md:mt-5 max-md:max-w-full">
-              <div className="flex flex-row max-md:flex-col">
+              <div className="flex flex-row max-md:flex-col w-full">
                 {children}
 
                 <aside className="flex flex-col w-[35%] ml-auto max-md:ml-0 max-md:w-full">
-                  <div className="flex flex-col mt-44 mr-6 max-md:mt-10">
+                  <div className="flex flex-col mt-10 mr-6 max-md:mt-10">
+                    <Quotes />
+                    <br />
                     <PointsCard />
                     <RecentlyFinishedCard />
                   </div>

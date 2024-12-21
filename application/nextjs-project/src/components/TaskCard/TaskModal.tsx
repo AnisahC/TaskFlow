@@ -7,6 +7,7 @@ interface TaskModalProps {
   onClose: () => void;
   onDelete: () => void;
   onComplete: () => void;
+  modalType: string;
 }
 
 const TaskModal: React.FC<TaskModalProps> = ({
@@ -14,11 +15,12 @@ const TaskModal: React.FC<TaskModalProps> = ({
   onClose,
   onDelete,
   onComplete,
+  modalType,
 }) => {
   const router = useRouter();
 
   const handleReload = () => {
-    // router.reload(); // Didn't work 
+    // router.reload(); // Didn't work
     window.location.reload(); // Keep for now to ensure working state
   };
 
@@ -64,6 +66,28 @@ const TaskModal: React.FC<TaskModalProps> = ({
     }
   };
 
+  // Function to move a completed task back to "To-Do"
+  const handleUncomplete = async () => {
+    try {
+      const response = await fetch(`/api/tasks/uncomplete`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: task._id }), // Send the task ID to mark as completed
+      });
+
+      if (response.ok) {
+        handleReload();
+      } else {
+        console.error("Failed to mark task as uncompleted");
+      }
+    } catch (error) {
+      console.error("Error completing task:", error);
+    }
+  };
+
+
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
@@ -73,12 +97,22 @@ const TaskModal: React.FC<TaskModalProps> = ({
         <p className="text-gray-700 mb-2">End Date: {task.endDate}</p>
         <p className="text-gray-700 mb-4">Description: {task.description}</p>
         <div className="flex justify-end space-x-4">
-          <button
-            onClick={handleComplete}
-            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
-          >
-            Complete
-          </button>
+          {modalType === "completed" ? (
+            <button
+              onClick={handleUncomplete}
+              className="px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-700"
+            >
+              Redo
+            </button>
+          ) : (
+            <button
+              onClick={handleComplete}
+              className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-700"
+            >
+              Complete
+            </button>
+          )}
+
           <button
             onClick={handleDelete}
             className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700"

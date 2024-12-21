@@ -1,50 +1,59 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MongoClient, ObjectId } from "mongodb";
 import bcrypt from "bcrypt";
+import { MongoClient } from "mongodb";
 
 const uri =
   "mongodb+srv://anisahc:Junaki720@task-management.vazts.mongodb.net/?retryWrites=true&w=majority&appName=Task-Management";
 const client = new MongoClient(uri);
+const JWT_SECRET = process.env.JWT_SECRET || "I_am_a_SECRET";
 
 export async function POST(req: NextRequest) {
-  const { fullName, email, password } = await req.json();
-
-  if (!fullName || !email || !password) {
-    return NextResponse.json(
-      { message: "All fields are required" },
-      { status: 400 }
-    );
-  }
-
   try {
+    const { fullName, email, password } = await req.json();
+    console.log("Received registration request for email:", email);
+
+    if (!fullName || !email || !password) {
+      console.log("Name, email, or password missing");
+      return NextResponse.json(
+        { message: "Name, email, and password are required" },
+        { status: 400 }
+      );
+    }
+
     await client.connect();
     const database = client.db("task_management");
     const usersCollection = database.collection("users");
 
-    // Check if user already exists
     const existingUser = await usersCollection.findOne({ email });
     if (existingUser) {
+      console.log("User already exists for email:", email);
       return NextResponse.json(
         { message: "User already exists" },
         { status: 400 }
       );
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("Hashed password for email", email, ":", hashedPassword);
 
-    // Create and insert new user
-    const newUser = { fullName, email, password: hashedPassword };
+    const newUser = {
+      fullName: fullName,
+      email,
+      password: hashedPassword,
+      myPoints: 0,
+    };
+
     await usersCollection.insertOne(newUser);
+    console.log("User registered successfully for email:", email);
 
     return NextResponse.json(
       { message: "User registered successfully" },
       { status: 201 }
     );
   } catch (error) {
-    console.error("Error registering user:", error);
+    console.error("Error during registration:", error);
     return NextResponse.json(
-      { message: "Error registering user" },
+      { message: "Internal server error" },
       { status: 500 }
     );
   } finally {
