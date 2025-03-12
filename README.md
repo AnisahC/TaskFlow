@@ -7,7 +7,7 @@
 TaskFlow is a task management tool designed to help users efficiently manage and prioritize tasks. It features a reward system, built-in calendar for tracking deadlines, and priority-based color scheme for better usability.
 
 ## Tech Stack
-- Frontend: React, Next.js
+- Frontend: React, Next.js, TypeScript
 - Backend: Next.js API Routes
 - Database: MongoDB Atlas
 - Authentication: bcrypt for password hashing
